@@ -6,14 +6,14 @@
 #    By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/30 12:38:01 by emajuri           #+#    #+#              #
-#    Updated: 2023/03/30 12:38:38 by emajuri          ###   ########.fr        #
+#    Updated: 2023/04/03 15:49:21 by emajuri          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 NAME = minishell
 
-SRC = 
+SRC = $(NAME).c
 
 OSRC = $(SRC:%.c=%.o)
 
@@ -24,7 +24,7 @@ WWW = -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME): $(OSRC)
-	cc $(WWW) $(OSRC) -o $(NAME)
+	cc $(WWW) $(OSRC) -o $(NAME) -lreadline -L$(HOME)/.brew/Cellar/readline/8.2.1/lib
 
 clean:
 	rm -f $(OSRC)
