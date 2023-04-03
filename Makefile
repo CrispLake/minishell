@@ -15,7 +15,7 @@ NAME = minishell
 
 LIBFT = libft/libft.a
 
-SRC = $(NAME).c
+SRC = $(NAME).c print_error.c
 
 OSRC = $(SRC:%.c=%.o)
 
