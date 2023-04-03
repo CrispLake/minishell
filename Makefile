@@ -6,14 +6,14 @@
 #    By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/30 12:38:01 by emajuri           #+#    #+#              #
-#    Updated: 2023/04/03 15:49:21 by emajuri          ###   ########.fr        #
+#    Updated: 2023/04/03 19:02:21 by jole             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 NAME = minishell
 
-SRC = $(NAME).c
+SRC = $(NAME).c print_error.c
 
 OSRC = $(SRC:%.c=%.o)
 
