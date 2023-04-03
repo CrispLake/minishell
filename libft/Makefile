@@ -6,7 +6,7 @@
 #    By: emajuri <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/24 16:39:22 by emajuri           #+#    #+#              #
-#    Updated: 2023/02/17 15:26:00 by emajuri          ###   ########.fr        #
+#    Updated: 2023/04/03 19:48:19 by emajuri          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,3 @@ fclean: clean
 	cc $(WWW) -c -o $@ $^
 
 re: fclean all
-
-test:
-	cc testmain.c libft.a -g
