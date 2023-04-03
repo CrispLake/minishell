@@ -6,7 +6,7 @@
 #    By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/30 12:38:01 by emajuri           #+#    #+#              #
-#    Updated: 2023/04/03 19:09:21 by emajuri          ###   ########.fr        #
+#    Updated: 2023/04/03 20:24:13 by emajuri          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = minishell
 
 LIBFT = libft/libft.a
 
-SRC = $(NAME).c print_error.c
+SRC = $(NAME).c print_error.c tokenization.c
 
 OSRC = $(SRC:%.c=%.o)
 
