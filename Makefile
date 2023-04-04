@@ -6,7 +6,7 @@
 #    By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/30 12:38:01 by emajuri           #+#    #+#              #
-#    Updated: 2023/04/04 13:55:18 by emajuri          ###   ########.fr        #
+#    Updated: 2023/04/04 14:01:23 by emajuri          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,11 +41,14 @@ all: $(NAME)
 $(LIBFT):
 	make -C libft
 
-$(NAME): $(OBJ) $(LIBFT)
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
+
+$(NAME): $(OBJ_DIR) $(OBJ) $(LIBFT)
 	cc $(WWW) $(OBJ) -o $(NAME) $(READLINE_FLAGS) $(LIBFT_FLAGS)
 
 clean:
-	rm -f $(OBJ) $(DEP)
+	rm -rf $(OBJ_DIR)
 	make clean -C libft
 
 fclean: clean
