@@ -6,24 +6,33 @@
 #    By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/30 12:38:01 by emajuri           #+#    #+#              #
-#    Updated: 2023/04/03 20:24:13 by emajuri          ###   ########.fr        #
+#    Updated: 2023/04/04 14:01:23 by emajuri          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 NAME = minishell
 
-LIBFT = libft/libft.a
+SRC = $(NAME).c print_error.c
 
-SRC = $(NAME).c print_error.c tokenization.c
+OBJ = $(addprefix obj/,$(SRC:%.c=%.o))
 
-OSRC = $(SRC:%.c=%.o)
+DEP = $(OBJ:%.o=%.d)
 
-WWW = -Wall -Wextra -Werror
+#folders
+INC = ./inc
+FT_DIR = ./libft
+SRC_DIR = ./src
+OBJ_DIR = ./obj
 
-LIBFT_FLAGS = -L libft -lft
+#libft
 
+LIBFT = $(FT_DIR)/libft.a
+LIBFT_FLAGS = -L $(FT_DIR) -lft
+
+#flags
 READLINE_FLAGS = -lreadline -L $(HOME)/.brew/Cellar/readline/8.2.1/lib
+WWW = -Wall -Wextra -Werror
 
 .PHONY: all clean fclean re
 
@@ -32,18 +41,23 @@ all: $(NAME)
 $(LIBFT):
 	make -C libft
 
-$(NAME): $(OSRC) $(LIBFT)
-	cc $(WWW) $(OSRC) -o $(NAME) $(READLINE_FLAGS) $(LIBFT_FLAGS)
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
+
+$(NAME): $(OBJ_DIR) $(OBJ) $(LIBFT)
+	cc $(WWW) $(OBJ) -o $(NAME) $(READLINE_FLAGS) $(LIBFT_FLAGS)
 
 clean:
-	rm -f $(OSRC)
+	rm -rf $(OBJ_DIR)
 	make clean -C libft
 
 fclean: clean
 	rm -f $(NAME)
 	rm -f $(LIBFT)
 
-%.o: %.c
-	cc $(WWW) -c -o $@ $^
+-include $(DEP)
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	cc $(WWW) -MMD -c $< -o $@
 
 re: fclean all

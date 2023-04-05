@@ -6,11 +6,11 @@
 /*   By: jole <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:28:32 by jole              #+#    #+#             */
-/*   Updated: 2023/04/03 19:31:32 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/04 13:10:54 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../inc/minishell.h"
 
 void	print_error(const char *error_message, char *input)
 {
