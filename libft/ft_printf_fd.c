@@ -6,7 +6,7 @@
 /*   By: emajuri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 12:13:18 by emajuri           #+#    #+#             */
-/*   Updated: 2023/02/10 12:05:55 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/05 18:24:41 by crisplake        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	putull_base(unsigned long long n, int base, int caps, int fd)
 		count += putull_base(n / base, base, caps, fd);
 		count += putull_base(n % base, base, caps, fd);
 	}
-	if (n <= (unsigned int)(base - 1) && n >= 0)
+	if (n <= (unsigned int)(base - 1))
 	{
 		ft_putchar_fd(str[n], fd);
 		return (++count);
