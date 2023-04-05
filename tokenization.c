@@ -6,8 +6,14 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 20:24:03 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/03 20:24:04 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/05 16:27:29 by crisplake        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../minishell.h"
 
+int	tokenization(char *pipeline)
+{
+	
+	return (0);
+}
