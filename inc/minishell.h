@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:00:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/04 13:42:54 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/05 18:47:35 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,11 @@
 #include <readline/history.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <signal.h>
+#include <termios.h>
 
 void	rl_replace_line(const char *text, int clear_undo);
 void	print_error(const char *error_message, char *input);
+void	sigint_handler(int sig);
 
 #endif
