@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:00:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/07 17:24:39 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/07 21:26:45 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,7 @@ void	open_echo_control(struct termios *t);
 void	ctrl_d_handler(void);
 
 int		count_quotes(char *pipeline);
+
+int		expand_variables(char **input);
 
 #endif
