@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/05 18:48:17 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/07 16:47:45 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,17 @@
 int	main(void)
 {
 	char	*pipeline;
-	struct	termios t;
+	struct termios t;
 
 	tcgetattr(0, &t);
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
+	get_signals();
 	while(1)
 	{
-		t.c_lflag &= ~ECHOCTL;
-		tcsetattr(0, TCSANOW, &t);
+		close_echo_control(&t);
 		pipeline = readline("minishell ~>");
-		t.c_lflag |= ECHOCTL;
-		tcsetattr(0, TCSANOW, &t);
+		open_echo_control(&t);
 		if (!pipeline)
-			break ;
+			ctrl_d_handler();
 		free(pipeline);
 	}
 	return (0);
