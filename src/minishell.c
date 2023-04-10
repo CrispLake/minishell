@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/10 13:27:15 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/10 14:29:48 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,9 @@ int	main(void)
 {
 	char	*pipeline;
 	struct termios t;
-	char	**split;
 
 	tcgetattr(0, &t);
 	get_signals();
-	split = ft_split("moi $HOME $TERM $heijou", ' ');
 	while(1)
 	{
 		close_echo_control(&t);
@@ -29,7 +27,7 @@ int	main(void)
 		if (!pipeline)
 			ctrl_d_handler();
 		count_quotes(pipeline);
-		expand_variables(split);
+		expand_variables();
 		free(pipeline);
 	}
 	return (0);
