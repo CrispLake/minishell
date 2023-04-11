@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:00:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/07 17:24:39 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/14 17:25:38 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 #include <signal.h>
 #include <termios.h>
 
+extern char	**environ;
+
 void	rl_replace_line(const char *text, int clear_undo);
 void	print_error(const char *error_message, char *input);
 
@@ -31,5 +33,8 @@ void	open_echo_control(struct termios *t);
 void	ctrl_d_handler(void);
 
 int		count_quotes(char *pipeline);
+
+int		builtin_pwd(void);
+void	builtin_env(void);
 
 #endif
