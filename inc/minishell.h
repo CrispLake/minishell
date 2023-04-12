@@ -6,14 +6,14 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:00:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/05 18:35:18 by crisplake        ###   ########.fr       */
+/*   Updated: 2023/04/12 18:32:51 by crisplake        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# define METACHARS "|<> \t"
+# define METACHARS "|<> \t\n"
 
 # include "../libft/libft.h"
 # include <stdio.h>
