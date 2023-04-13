@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 16:17:29 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/13 17:34:50 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/13 18:31:22 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,28 @@ int	is_number(char *str, int i)
 	return (1);
 }
 
+int	len_delim_word(char *str, int delim)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != delim)
+		i++;
+	return (i);
+}
+
 int	len_word(char *str)
 {
 	int	i;
 
 	i = 0;
 	while (!ft_strchr(METACHARS, str[i]) && str[i])
-		i++;
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+			i += len_delim_word(&str[i + 1], str[i]) + 2;
+		else
+			i++;
+	}
 	if (str[i] == '<' || str[i] == '>')
 	{
 		if (is_number(str, i))
@@ -60,16 +75,6 @@ int	len_metachars(char *str, int metachar)
 
 	i = 0;
 	while (str[i] == metachar)
-		i++;
-	return (i);
-}
-
-int	len_delim_word(char *str, int delim)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != delim)
 		i++;
 	return (i);
 }

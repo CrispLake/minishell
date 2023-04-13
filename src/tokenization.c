@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 20:24:03 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/13 16:30:04 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/13 18:31:04 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	count_total(char *pipeline)
 	while (pipeline[i])
 	{
 		if (ft_strchr("\'\"", pipeline[i]))
-			i += len_delim_word(&pipeline[i], pipeline[i]);
+			i += len_delim_word(&pipeline[i + 1], pipeline[i]) + 2;
 		else if (ft_strchr(METACHARS, pipeline[i]))
 			i += len_metachars(&pipeline[i], pipeline[i]);
 		else
