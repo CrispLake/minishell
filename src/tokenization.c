@@ -6,52 +6,12 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 20:24:03 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/12 19:30:51 by crisplake        ###   ########.fr       */
+/*   Updated: 2023/04/13 16:30:04 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-int	ft_isspace(char c)
-{
-	if (c == ' ')
-		return (1);
-	if (c == '\t')
-		return (1);
-	if (c == '\n')
-		return (1);
-	return (0);
-}
-
-int	len_word(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (!ft_strchr(METACHARS, str[i]) && str[i])
-		i++;
-	return (i);
-}
-
-int	len_metachars(char *str, int metachar)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] == metachar)
-		i++;
-	return (i);
-}
-
-int	len_delim_word(char *str, int delim)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != delim)
-		i++;
-	return (i);
-}
+#include "../inc/tokenization.h"
 
 int	count_total(char *pipeline)
 {
