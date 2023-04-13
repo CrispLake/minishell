@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 16:17:29 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/13 17:30:27 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/13 17:34:50 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,3 @@ int	len_delim_word(char *str, int delim)
 		i++;
 	return (i);
 }
-
