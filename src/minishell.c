@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/04 13:14:59 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/07 17:24:35 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,18 @@
 int	main(void)
 {
 	char	*pipeline;
+	struct termios t;
+
+	tcgetattr(0, &t);
+	get_signals();
 	while(1)
 	{
-		pipeline = readline("minishell ~> ");
+		close_echo_control(&t);
+		pipeline = readline("minishell ~>");
+		open_echo_control(&t);
+		if (!pipeline)
+			ctrl_d_handler();
+		count_quotes(pipeline);
 		free(pipeline);
 	}
 	return (0);
