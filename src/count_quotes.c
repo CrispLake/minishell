@@ -6,7 +6,7 @@
 /*   By: jole <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 17:00:43 by jole              #+#    #+#             */
-/*   Updated: 2023/04/07 17:24:37 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/14 20:34:46 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,17 @@ int	count_quotes(char *pipeline)
 			delim = pipeline[i];
 			while (pipeline[i])
 			{
-				i++;
-				if (pipeline[i] == delim)
+				if (pipeline[i++] == delim)
 				{
 					delim = 0;
 					break ;
 				}
 			}
 			if (delim != 0)
-			{
-				printf("non closed quote found\n");
 				return (1);
-			}
 			delim = 0;
 		}
 		i++;
 	}
-	return (0);
+	return (0)
 }
