@@ -38,5 +38,5 @@ int	count_quotes(char *pipeline)
 		}
 		i++;
 	}
-	return (0)
+	return (0);
 }
