@@ -24,9 +24,9 @@ int	count_quotes(char *pipeline)
 		if (pipeline[i] == '\'' || pipeline [i] == '\"')
 		{
 			delim = pipeline[i];
-			while (pipeline[i])
+			while (pipeline[i++])
 			{
-				if (pipeline[i++] == delim)
+				if (pipeline[i] == delim)
 				{
 					delim = 0;
 					break ;
@@ -34,7 +34,6 @@ int	count_quotes(char *pipeline)
 			}
 			if (delim != 0)
 				return (1);
-			delim = 0;
 		}
 		i++;
 	}
