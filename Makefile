@@ -6,13 +6,14 @@
 #    By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/30 12:38:01 by emajuri           #+#    #+#              #
-#    Updated: 2023/04/07 20:06:38 by jole             ###   ########.fr        #
+#    Updated: 2023/04/13 17:47:45 by emajuri          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRC = $(NAME).c print_error.c sig_handler.c count_quotes.c
+SRC = $(NAME).c print_error.c tokenization.c tokenization_helpers.c \
+	  sig_handler.c count_quotes.c
 
 OBJ = $(addprefix obj/,$(SRC:%.c=%.o))
 
