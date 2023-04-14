@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 20:24:03 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/14 20:24:52 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/14 21:52:27 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,11 @@ int	set_token_type(char *str)
 	return (PIPE);
 }
 
-int	copy_tokens(char *pipeline, t_token *tokens)
+int	copy_tokens(char *pipeline, t_token *tokens, int i)
 {
-	int	i;
 	int	len;
 	int	token;
 
-	i = 0;
 	len = 0;
 	token = 0;
 	while (pipeline[i])
@@ -101,7 +99,7 @@ t_token	*tokenization(char *pipeline)
 	if (!tokens)
 		return (NULL);
 	tokens[count].type = -1;
-	if (copy_tokens(pipeline, tokens))
+	if (copy_tokens(pipeline, tokens, i))
 	{
 		while (tokens[i].str)
 			free(tokens[i++].str);
