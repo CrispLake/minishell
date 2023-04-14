@@ -6,15 +6,12 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:00:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/14 19:01:42 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/14 22:51:13 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-# define METACHARS "|<> \t\n"
-
 # include "../libft/libft.h"
 # include "tokenization.h"
 # include <stdio.h>
@@ -24,6 +21,7 @@
 # include <unistd.h>
 # include <signal.h>
 # include <termios.h>
+# define METACHARS "|<> \t\n"
 
 void	rl_replace_line(const char *text, int clear_undo);
 void	print_error(const char *error_message, char *input);
