@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:00:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/13 18:32:04 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/14 17:00:16 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define METACHARS "|<> \t\n"
 
 # include "../libft/libft.h"
+# include "tokenization.h"
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -28,7 +29,7 @@ void	rl_replace_line(const char *text, int clear_undo);
 void	print_error(const char *error_message, char *input);
 
 //Parsing
-char	**tokenization(char *pipeline);
+t_token	*tokenization(char *pipeline);
 int		count_quotes(char *pipeline);
 
 //Signals

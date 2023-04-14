@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 20:24:03 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/13 18:31:04 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/14 17:14:50 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,42 @@ int	count_total(char *pipeline)
 	total = 0;
 	while (pipeline[i])
 	{
-		if (ft_strchr("\'\"", pipeline[i]))
-			i += len_delim_word(&pipeline[i + 1], pipeline[i]) + 2;
-		else if (ft_strchr(METACHARS, pipeline[i]))
+		while (ft_isspace(pipeline[i]))
+			i++;
+		if (ft_strchr(METACHARS, pipeline[i]))
 			i += len_metachars(&pipeline[i], pipeline[i]);
 		else
 			i += len_word(&pipeline[i]);
-		if (ft_isspace(pipeline[i - 1]))
-			total--;
 		total++;
 	}
 	return (total);
 }
 
-int	copy_tokens(char *pipeline, char **tokens)
+int	set_token_type(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	i--;
+	if (!ft_strchr(METACHARS, str[i]))
+		return (WORD);
+	if (str[i] == '<' || str[i] == '>')
+	{
+		if (i && str[i - 1] == '<')
+			return (HEREDOC);
+		else if (str[i] == '<')
+			return (INPUT);
+		if (i && str[i - 1] == '>')
+			return (APPEND);
+		else
+			return (OUTPUT);
+	}
+	return (PIPE);
+}
+
+int	copy_tokens(char *pipeline, t_token *tokens)
 {
 	int	i;
 	int	len;
@@ -48,38 +70,37 @@ int	copy_tokens(char *pipeline, char **tokens)
 	{
 		while (ft_isspace(pipeline[i]))
 			i++;
-		if (ft_strchr("\'\"", pipeline[i]))
-			len = len_delim_word(&pipeline[i], pipeline[i]);
-		else if (ft_strchr(METACHARS, pipeline[i]))
+		if (ft_strchr(METACHARS, pipeline[i]))
 			len = len_metachars(&pipeline[i], pipeline[i]);
 		else
 			len = len_word(&pipeline[i]);
-		tokens[token] = ft_calloc(len + 1, sizeof(char));
-		if (!tokens[token])
+		tokens[token].str = ft_calloc(len + 1, sizeof(char));
+		if (!tokens[token].str)
 			return (-1);
-		ft_strlcpy(tokens[token], &pipeline[i], len + 1);
+		ft_strlcpy(tokens[token].str, &pipeline[i], len + 1);
+		tokens[token].type = set_token_type(tokens[token].str);
 		token++;
 		i += len;
 	}
 	return (0);
 }
 
-char	**tokenization(char *pipeline)
+t_token	*tokenization(char *pipeline)
 {
-	char	**tokens;
+	t_token	*tokens;
 	int		count;
 	int		i;
 
 	i = 0;
 	count = count_total(pipeline);
-	tokens = ft_calloc(count + 1, sizeof(char *));
+	tokens = ft_calloc(count + 1, sizeof(t_token));
 	if (!tokens)
 		return (NULL);
-	tokens[count] = NULL;
+	tokens[count].str = NULL;
 	if (copy_tokens(pipeline, tokens))
 	{
-		while (tokens[i])
-			free(tokens[i++]);
+		while (tokens[i].str)
+			free(tokens[i++].str);
 		free(tokens);
 		return (NULL);
 	}

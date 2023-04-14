@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 16:17:29 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/13 18:31:22 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/14 17:13:50 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,9 @@ int	len_word(char *str)
 	{
 		if (is_number(str, i))
 		{
-			while (str[i] == '<' || str[i] == '>')
+			if (str[i] == '<' || str[i] == '>')
+				i++;
+			if (str[i] == str[i - 1])
 				i++;
 		}
 	}
@@ -73,8 +75,8 @@ int	len_metachars(char *str, int metachar)
 {
 	int	i;
 
-	i = 0;
-	while (str[i] == metachar)
+	i = 1;
+	if (metachar != '|' && str[i] == metachar)
 		i++;
 	return (i);
 }
