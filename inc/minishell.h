@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:00:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/14 17:00:16 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/14 19:01:42 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	print_error(const char *error_message, char *input);
 //Parsing
 t_token	*tokenization(char *pipeline);
 int		count_quotes(char *pipeline);
+char	***make_commands(t_token *tokens);
 
 //Signals
 void	get_signals(void);
