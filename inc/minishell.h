@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:00:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/14 17:00:16 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/14 21:33:05 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,22 @@
 # include <signal.h>
 # include <termios.h>
 
+
+typedef struct s_env
+{
+	char **env;
+	int	size;
+	int	items;
+}				t_env;
+
+typedef struct s_vars
+{
+	t_env env;
+}				t_vars;
+
+t_vars	g_vars;
+
+void	init_env(void);
 void	rl_replace_line(const char *text, int clear_undo);
 void	print_error(const char *error_message, char *input);
 
