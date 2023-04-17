@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/14 19:13:43 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/17 16:43:53 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,29 +17,47 @@ int	main(void)
 	char			*pipeline;
 	struct termios	t;
 	t_token			*tokens;
+	char			***commands;
+	int				i;
 
 	tcgetattr(0, &t);
 	get_signals();
-	while(1)
+	while (1)
 	{
 		close_echo_control(&t);
 		pipeline = readline("minishell ~>");
 		open_echo_control(&t);
 		if (!pipeline)
 			ctrl_d_handler();
-		count_quotes(pipeline);
+		if (count_quotes(pipeline))
+		{
+			print_error("Unclosed quotes", pipeline);
+			continue ;
+		}
 		tokens = tokenization(pipeline);
 		if (!tokens)
-			print_error("Malloc error in tokenization", pipeline);
-		int	i = 0;
-		printf("---\n");
-		while(tokens[i].str)
 		{
-			printf("type: %d, %s+\n", tokens[i].type, tokens[i].str);
-			i++;
+			print_error("Malloc error in tokenization", pipeline);
+			continue ;
 		}
-		printf("---\n");
-		make_commands(tokens);
+		commands = make_commands(tokens);
+		if (!commands)
+		{
+			print_error("Error in make_commands", pipeline);
+			i = 0;
+			while (tokens[i].str)
+				free(tokens[i++].str);
+			free(tokens);
+			continue ;
+		}
+		i = 0;
+		while (tokens[i].str)
+			free(tokens[i++].str);
+		free(tokens);
+		i = 0;
+		while (commands[i])
+			free(commands[i++]);
+		free(commands);
 		free(pipeline);
 	}
 	return (0);

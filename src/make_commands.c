@@ -6,13 +6,13 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 18:22:21 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/14 20:27:13 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/17 16:23:38 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	error_print(int	error)
+static int	error_print(int error)
 {
 	char	c;
 
@@ -26,7 +26,7 @@ int	error_print(int	error)
 	return (-1);
 }
 
-int	count_commands(t_token *tokens)
+static int	count_commands(t_token *tokens)
 {
 	int	i;
 	int	count;
@@ -35,9 +35,8 @@ int	count_commands(t_token *tokens)
 	count = 1;
 	while (tokens[i].str)
 	{
-		if (!i)
-			if (tokens[i].type == PIPE)
-				return (error_print(PIPE));
+		if (!i && tokens[i].type == PIPE)
+			return (error_print(PIPE));
 		if (tokens[i].type == PIPE)
 		{
 			if (tokens[i + 1].type == PIPE || tokens[i + 1].type == -1)
@@ -46,7 +45,7 @@ int	count_commands(t_token *tokens)
 		}
 		else if (tokens[i].type != WORD)
 			if (tokens[i + 1].type != WORD)
-				return (error_print(tokens[i + 1].type));
+				return (error_print(tokens[i].type));
 		i++;
 	}
 	return (count);
@@ -54,15 +53,23 @@ int	count_commands(t_token *tokens)
 
 char	***make_commands(t_token *tokens)
 {
-	// char	***commands;
+	char	***commands;
 	int		count;
+	int		i;
 
 	count = count_commands(tokens);
 	if (count < 0)
 		return (NULL);
-	printf("%d\n", count);
-	// commands = ft_calloc(count * 2 + 1, sizeof(char **));
-	// if (!commands)
-	// 	return (NULL);
-	return (NULL);
+	commands = ft_calloc(count * 2 + 1, sizeof(char **));
+	if (!commands)
+		return (NULL);
+	i = 0;
+	if (place_pointers(commands, tokens))
+	{
+		while (commands[i])
+			free(commands[i++]);
+		free(commands);
+		return (NULL);
+	}
+	return (commands);
 }

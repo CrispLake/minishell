@@ -6,14 +6,15 @@
 #    By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/30 12:38:01 by emajuri           #+#    #+#              #
-#    Updated: 2023/04/14 19:01:01 by emajuri          ###   ########.fr        #
+#    Updated: 2023/04/17 16:46:08 by emajuri          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRC = $(NAME).c print_error.c tokenization.c tokenization_helpers.c \
-	  sig_handler.c count_quotes.c make_commands.c
+#Delete debug_prints when not needed anymore
+SRC = debug_prints.c $(NAME).c print_error.c tokenization.c tokenization_helpers.c \
+	  sig_handler.c count_quotes.c make_commands.c make_commands_helpers.c
 
 OBJ = $(addprefix obj/,$(SRC:%.c=%.o))
 

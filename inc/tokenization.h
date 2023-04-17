@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 16:18:06 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/14 16:45:11 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/17 16:18:34 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,8 @@ int	ft_isspace(char c);
 int	len_word(char *str);
 int	len_metachars(char *str, int metachar);
 int	len_delim_word(char *str, int delim);
+
+//Parse tokens
+int	place_pointers(char ***commands, t_token *tokens);
 
 #endif
