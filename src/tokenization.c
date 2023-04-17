@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 20:24:03 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/14 17:14:50 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/14 21:52:27 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	count_total(char *pipeline)
 	{
 		while (ft_isspace(pipeline[i]))
 			i++;
+		if (!pipeline[i])
+			break ;
 		if (ft_strchr(METACHARS, pipeline[i]))
 			i += len_metachars(&pipeline[i], pipeline[i]);
 		else
@@ -57,19 +59,19 @@ int	set_token_type(char *str)
 	return (PIPE);
 }
 
-int	copy_tokens(char *pipeline, t_token *tokens)
+int	copy_tokens(char *pipeline, t_token *tokens, int i)
 {
-	int	i;
 	int	len;
 	int	token;
 
-	i = 0;
 	len = 0;
 	token = 0;
 	while (pipeline[i])
 	{
 		while (ft_isspace(pipeline[i]))
 			i++;
+		if (!pipeline[i])
+			break ;
 		if (ft_strchr(METACHARS, pipeline[i]))
 			len = len_metachars(&pipeline[i], pipeline[i]);
 		else
@@ -96,8 +98,8 @@ t_token	*tokenization(char *pipeline)
 	tokens = ft_calloc(count + 1, sizeof(t_token));
 	if (!tokens)
 		return (NULL);
-	tokens[count].str = NULL;
-	if (copy_tokens(pipeline, tokens))
+	tokens[count].type = -1;
+	if (copy_tokens(pipeline, tokens, i))
 	{
 		while (tokens[i].str)
 			free(tokens[i++].str);
