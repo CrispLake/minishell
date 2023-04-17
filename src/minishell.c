@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/14 15:18:10 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/17 13:31:38 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,7 @@ int	main(int argc, char **argv)
 	argv += 0;
 	tcgetattr(0, &t);
 	get_signals();
-	int i = 0;
-	while (environ[i])
-		i++;
-	i -= 2;
-	printf("%s\n", environ[i]);
-	environ[i][5] = 'E';
-	printf("%s\n", environ[i]);
-	i = 0;
-	while (environ[i])
-		free(environ[i++]);
+	init_env();
 	while(1)
 	{
 		close_echo_control(&t);
