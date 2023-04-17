@@ -22,7 +22,8 @@ int	main(void)
 
 	tcgetattr(0, &t);
 	get_signals();
-	while (1)
+	init_env();
+	while(1)
 	{
 		close_echo_control(&t);
 		pipeline = readline("minishell ~>");

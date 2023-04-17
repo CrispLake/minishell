@@ -14,7 +14,7 @@ NAME = minishell
 
 #Delete debug_prints when not needed anymore
 SRC = debug_prints.c $(NAME).c print_error.c tokenization.c tokenization_helpers.c \
-	  sig_handler.c count_quotes.c make_commands.c make_commands_helpers.c
+	  sig_handler.c count_quotes.c init_env.c make_commands.c make_commands_helpers.c 
 
 OBJ = $(addprefix obj/,$(SRC:%.c=%.o))
 

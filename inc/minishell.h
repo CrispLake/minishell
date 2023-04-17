@@ -23,6 +23,22 @@
 # include <termios.h>
 # define METACHARS "|<> \t\n"
 
+
+typedef struct s_env
+{
+	char **env;
+	int	size;
+	int	items;
+}				t_env;
+
+typedef struct s_vars
+{
+	t_env env;
+}				t_vars;
+
+t_vars	g_vars;
+
+void	init_env(void);
 void	rl_replace_line(const char *text, int clear_undo);
 void	print_error(const char *error_message, char *input);
 
