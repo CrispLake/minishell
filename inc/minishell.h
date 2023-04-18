@@ -6,14 +6,12 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:00:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/17 13:30:18 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/18 12:26:20 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-extern char	**environ;
 
 # include "../libft/libft.h"
 # include "tokenization.h"
@@ -41,9 +39,10 @@ typedef struct s_vars
 
 t_vars	g_vars;
 
-void	init_env(void);
+int		init_env(void);
 void	rl_replace_line(const char *text, int clear_undo);
 void	print_error(const char *error_message, char *input);
+void	free_double_pointer(char **array);
 
 //Parsing
 t_token	*tokenization(char *pipeline);
@@ -59,5 +58,7 @@ int		count_quotes(char *pipeline);
 
 int		builtin_pwd(void);
 void	builtin_env(void);
+int		builtin_export(char *str);
+int		builtin_unset(char *str);
 
 #endif
