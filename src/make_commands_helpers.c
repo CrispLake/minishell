@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 16:15:56 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/17 16:17:25 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/18 12:36:08 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,30 @@ static int	count_type(t_token *tokens, int type)
 	return (count);
 }
 
-static void	point_words(char **commands, t_token *tokens)
+static int	count_redi(t_token *tokens)
+{
+	int	count;
+	int	i;
+
+	count = 0;
+	i = 0;
+	while (tokens[i].type != PIPE && tokens[i].type != -1)
+	{
+		if (!i && (tokens[i].type != WORD && tokens[i].type != PIPE))
+			count++;
+		else if (i)
+		{
+			if (tokens[i].type != WORD && tokens[i].type != PIPE)
+				count++;
+			else if (tokens[i - 1].type != WORD && tokens[i - 1].type != PIPE)
+				count++;
+		}
+		i++;
+	}
+	return (count);
+}
+
+static void	point_words(char **cmd, t_token *tokens)
 {
 	int	i;
 
@@ -53,16 +76,16 @@ static void	point_words(char **commands, t_token *tokens)
 			if (i)
 				if (tokens[i - 1].type != WORD && tokens[i - 1].type != PIPE)
 					break ;
-			*commands = tokens[i].str;
-			commands++;
+			*cmd = tokens[i].str;
+			cmd++;
 			break ;
 		}
 		i++;
 	}
-	commands = NULL;
+	cmd = NULL;
 }
 
-static void	point_redirections(char **commands, t_token *tokens)
+static void	point_redirections(char **redi, t_token *tokens)
 {
 	int	i;
 
@@ -71,24 +94,24 @@ static void	point_redirections(char **commands, t_token *tokens)
 	{
 		if (tokens[i].type != WORD)
 		{
-			*commands = tokens[i].str;
-			commands++;
+			*redi = tokens[i].str;
+			redi++;
 		}
 		else if (i)
 		{
 			if (tokens[i].type == WORD && \
 				(tokens[i - 1].type != PIPE && tokens[i - 1].type != WORD))
 			{
-				*commands = tokens[i].str;
-				commands++;
+				*redi = tokens[i].str;
+				redi++;
 			}
 		}
 		i++;
 	}
-	commands = NULL;
+	redi = NULL;
 }
 
-int	place_pointers(char ***commands, t_token *tokens)
+int	place_pointers(t_command *cmds, t_token *tokens)
 {
 	int	i;
 	int	tok;
@@ -97,22 +120,20 @@ int	place_pointers(char ***commands, t_token *tokens)
 	tok = 0;
 	while (tokens[tok].str)
 	{
-		commands[i] = ft_calloc(count_type(&tokens[tok], WORD) + 1, \
+		cmds[i].cmd = ft_calloc(count_type(&tokens[tok], WORD) + 1, \
 						sizeof(char *));
-		if (!commands[i])
+		if (!cmds[i].cmd)
 			return (-1);
-		commands[i + 1] = ft_calloc(count_type(&tokens[tok], INPUT) + \
-						count_type(&tokens[tok], OUTPUT) + \
-						count_type(&tokens[tok], HEREDOC) + \
-						count_type(&tokens[tok], APPEND) + 1, sizeof(char *));
-		if (!commands[i + 1])
+		cmds[i].redi = ft_calloc(count_redi(&tokens[tok]) + 1, sizeof(char *));
+		if (!cmds[i].redi)
 			return (-1);
-		point_words(commands[i], &tokens[tok]);
-		point_redirections(commands[i + 1], &tokens[tok]);
-		while (tokens[tok].type != PIPE && tokens[tok + 1].type != -1)
+		point_words(cmds[i].cmd, &tokens[tok]);
+		point_redirections(cmds[i].redi, &tokens[tok]);
+		while (tokens[tok].type != PIPE && tokens[tok].type != -1)
 			tok++;
-		tok++;
-		i += 2;
+		if (tokens[tok].type == PIPE)
+			tok++;
+		i++;
 	}
 	return (0);
 }

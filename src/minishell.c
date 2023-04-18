@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/17 16:43:53 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/18 12:36:46 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,23 @@ int	main(void)
 	char			*pipeline;
 	struct termios	t;
 	t_token			*tokens;
-	char			***commands;
+	t_command		*commands;
 	int				i;
 
 	tcgetattr(0, &t);
 	get_signals();
 	init_env();
-	while(1)
+	while (1)
 	{
 		close_echo_control(&t);
 		pipeline = readline("minishell ~>");
 		open_echo_control(&t);
 		if (!pipeline)
 			ctrl_d_handler();
+	//	builtin_pwd();
+	//	builtin_env();
+	//	builtin_export("TEST==hei");
+	//	builtin_unset("TEST");
 		if (count_quotes(pipeline))
 		{
 			print_error("Unclosed quotes", pipeline);
@@ -51,13 +55,17 @@ int	main(void)
 			free(tokens);
 			continue ;
 		}
+		print_commands(commands);
 		i = 0;
 		while (tokens[i].str)
 			free(tokens[i++].str);
 		free(tokens);
 		i = 0;
-		while (commands[i])
-			free(commands[i++]);
+		while (commands[i].cmd)
+			free(commands[i++].cmd);
+		i = 0;
+		while (commands[i].redi)
+			free(commands[i++].redi);
 		free(commands);
 		free(pipeline);
 	}

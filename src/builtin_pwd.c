@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution.h                                        :+:      :+:    :+:   */
+/*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: jole <jole@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/17 17:46:30 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/18 18:25:27 by emajuri          ###   ########.fr       */
+/*   Created: 2023/04/18 12:01:59 by jole              #+#    #+#             */
+/*   Updated: 2023/04/18 12:02:24 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTION_H
-# define EXECUTION_H
+#include "../inc/minishell.h"
 
-typedef struct s_fd
+int	builtin_pwd(void)
 {
-	int	fd_in;
-	int	fd_out;
-	int	pipe[2];
-}	t_fd;
+	char	cwd[1024];
 
-typedef struct s_command
-{
-	char	**cmd;
-	char	**redi;
-}	t_command;
-
-#endif
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
+		printf("%s\n", cwd);
+	else
+	{
+		perror("Error in getcwd");
+		return (-1);
+	}
+	return (0);
+}

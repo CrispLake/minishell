@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jole <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: jole <jole@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 20:54:40 by jole              #+#    #+#             */
-/*   Updated: 2023/04/17 13:14:14 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/18 12:06:29 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 int	init_env(void)
 {
 	extern char	**environ;
-	int	i;
-	int	j;
+	int			i;
+	int			j;
 
 	i = 0;
 	while (environ[i])

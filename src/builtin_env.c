@@ -1,13 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution.c                                        :+:      :+:    :+:   */
+/*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: jole <jole@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/17 17:45:56 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/17 18:06:04 by emajuri          ###   ########.fr       */
+/*   Created: 2023/04/18 12:02:36 by jole              #+#    #+#             */
+/*   Updated: 2023/04/18 12:02:48 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../inc/minishell.h"
 
+void	builtin_env(void)
+{
+	int	i;
+
+	i = 0;
+	while (g_vars.env.env[i])
+		printf("%s\n", g_vars.env.env[i++]);
+}
