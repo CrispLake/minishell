@@ -12,7 +12,7 @@
 
 #include "../inc/minishell.h"
 
-int	main(int argc, char **argv)
+int	main(void)
 {
 	char			*pipeline;
 	struct termios	t;
@@ -20,8 +20,6 @@ int	main(int argc, char **argv)
 	char			***commands;
 	int				i;
 
-	argc += 0;
-	argv += 0;
 	tcgetattr(0, &t);
 	get_signals();
 	init_env();
@@ -32,7 +30,6 @@ int	main(int argc, char **argv)
 		open_echo_control(&t);
 		if (!pipeline)
 			ctrl_d_handler();
-		count_quotes(pipeline);
 	//	builtin_pwd();
 	//	builtin_env();
 	//	builtin_export("TEST==hei");
