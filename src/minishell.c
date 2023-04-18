@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/18 12:26:17 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/18 12:36:46 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@ int	main(int argc, char **argv)
 {
 	char			*pipeline;
 	struct termios	t;
+	t_token			*tokens;
+	char			***commands;
+	int				i;
 
 	argc += 0;
 	argv += 0;
@@ -34,6 +37,35 @@ int	main(int argc, char **argv)
 	//	builtin_env();
 	//	builtin_export("TEST==hei");
 	//	builtin_unset("TEST");
+		if (count_quotes(pipeline))
+		{
+			print_error("Unclosed quotes", pipeline);
+			continue ;
+		}
+		tokens = tokenization(pipeline);
+		if (!tokens)
+		{
+			print_error("Malloc error in tokenization", pipeline);
+			continue ;
+		}
+		commands = make_commands(tokens);
+		if (!commands)
+		{
+			print_error("Error in make_commands", pipeline);
+			i = 0;
+			while (tokens[i].str)
+				free(tokens[i++].str);
+			free(tokens);
+			continue ;
+		}
+		i = 0;
+		while (tokens[i].str)
+			free(tokens[i++].str);
+		free(tokens);
+		i = 0;
+		while (commands[i])
+			free(commands[i++]);
+		free(commands);
 		free(pipeline);
 	}
 	return (0);

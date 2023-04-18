@@ -6,13 +6,16 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:00:45 by emajuri           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/04/18 12:26:20 by jole             ###   ########.fr       */
+=======
+/*   Updated: 2023/04/14 22:51:13 by emajuri          ###   ########.fr       */
+>>>>>>> 2bb144a8f5a3207265a6224cffb34d43da24b06c
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
 # include "../libft/libft.h"
 # include "tokenization.h"
 # include <stdio.h>
@@ -22,8 +25,8 @@
 # include <unistd.h>
 # include <signal.h>
 # include <termios.h>
-
 # define METACHARS "|<> \t\n"
+
 
 typedef struct s_env
 {
@@ -47,6 +50,7 @@ void	free_double_pointer(char **array);
 //Parsing
 t_token	*tokenization(char *pipeline);
 int		count_quotes(char *pipeline);
+char	***make_commands(t_token *tokens);
 
 //Signals
 void	get_signals(void);
