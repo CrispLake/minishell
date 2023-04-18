@@ -6,7 +6,7 @@
 #    By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/30 12:38:01 by emajuri           #+#    #+#              #
-#    Updated: 2023/04/18 12:35:15 by jole             ###   ########.fr        #
+#    Updated: 2023/04/18 11:42:44 by emajuri          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ LIBFT_FLAGS = -L $(FT_DIR) -lft
 
 #flags
 READLINE_FLAGS = -lreadline -L $(HOME)/.brew/Cellar/readline/8.2.1/lib
-WWW = -Wall -Wextra -Werror
+WWW = -Wall -Wextra -Werror -fsanitize=address
 
 .PHONY: all clean fclean re
 

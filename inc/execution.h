@@ -1,37 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenization.h                                     :+:      :+:    :+:   */
+/*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/13 16:18:06 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/18 10:15:30 by emajuri          ###   ########.fr       */
+/*   Created: 2023/04/17 17:46:30 by emajuri           #+#    #+#             */
+/*   Updated: 2023/04/18 10:12:15 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKENIZATION_H
-# define TOKENIZATION_H
+#ifndef EXECUTION_H
+# define EXECUTION_H
 
-enum e_tokens
+typedef struct s_command
 {
-	WORD = 0,
-	PIPE = 1,
-	INPUT = 2,
-	OUTPUT = 3,
-	HEREDOC = 4,
-	APPEND = 5
-};
-
-typedef struct s_token
-{
-	int		type;
-	char	*str;
-}	t_token;
-
-int	ft_isspace(char c);
-int	len_word(char *str);
-int	len_metachars(char *str, int metachar);
-int	len_delim_word(char *str, int delim);
+	char	**cmd;
+	char	**redi;
+}	t_command;
 
 #endif
