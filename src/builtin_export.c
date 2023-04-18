@@ -21,7 +21,10 @@ int	expand_env(void)
 	tmp = g_vars.env.env;
 	g_vars.env.env = ft_calloc((g_vars.env.size + 5), sizeof(char *));
 	if (!g_vars.env.env)
+	{
+		free_double_pointer(tmp);
 		return (-1);
+	}
 	g_vars.env.size += 5;
 	i = -1;
 	while (tmp[++i])
