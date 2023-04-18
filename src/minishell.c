@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/18 10:28:15 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/18 11:02:28 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(void)
 	tcgetattr(0, &t);
 	get_signals();
 	init_env();
-	while(1)
+	while (1)
 	{
 		close_echo_control(&t);
 		pipeline = readline("minishell ~>");

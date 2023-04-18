@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 18:22:21 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/18 10:24:16 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/18 11:14:21 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_command	*make_commands(t_token *tokens)
 	count = count_commands(tokens);
 	if (count < 0)
 		return (NULL);
-	commands = ft_calloc(count + 1, sizeof(char **));
+	commands = ft_calloc(count + 1, sizeof(t_command));
 	if (!commands)
 		return (NULL);
 	if (place_pointers(commands, tokens))

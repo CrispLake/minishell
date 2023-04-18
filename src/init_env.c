@@ -6,7 +6,7 @@
 /*   By: jole <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 20:54:40 by jole              #+#    #+#             */
-/*   Updated: 2023/04/17 13:14:14 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/18 11:01:49 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 int	init_env(void)
 {
 	extern char	**environ;
-	int	i;
-	int	j;
+	int			i;
+	int			j;
 
 	i = 0;
 	while (environ[i])
