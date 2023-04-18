@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 16:36:11 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/17 16:42:08 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/18 10:23:01 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,27 @@ void	print_tokens(t_token *tokens)
 	printf("---\n");
 }
 
-void	print_commands(char ***commands)
+void	print_commands(t_command *commands)
 {
 	int	i;
 	int	i2;
 
 	printf("\n@@@@@@@@@@@@@\n\n");
 	i = 0;
-	while (commands[i])
+	while (commands[i].cmd)
 	{
 		i2 = 0;
 		printf("%d: \n", i);
-		while (commands[i][i2])
+		while (commands[i].cmd[i2])
 		{
-			printf("%s\n", commands[i][i2]);
+			printf("%s\n", commands[i].cmd[i2]);
+			i2++;
+		}
+		i2 = 0;
+		printf("redis: \n");
+		while (commands[i].redi[i2])
+		{
+			printf("%s\n", commands[i].redi[i2]);
 			i2++;
 		}
 		i++;

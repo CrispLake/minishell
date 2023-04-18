@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 16:15:56 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/17 16:17:25 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/18 10:19:32 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static void	point_redirections(char **commands, t_token *tokens)
 	commands = NULL;
 }
 
-int	place_pointers(char ***commands, t_token *tokens)
+int	place_pointers(t_command *commands, t_token *tokens)
 {
 	int	i;
 	int	tok;
@@ -97,18 +97,18 @@ int	place_pointers(char ***commands, t_token *tokens)
 	tok = 0;
 	while (tokens[tok].str)
 	{
-		commands[i] = ft_calloc(count_type(&tokens[tok], WORD) + 1, \
+		commands[i].cmd = ft_calloc(count_type(&tokens[tok], WORD) + 1, \
 						sizeof(char *));
-		if (!commands[i])
+		if (!commands[i].cmd)
 			return (-1);
-		commands[i + 1] = ft_calloc(count_type(&tokens[tok], INPUT) + \
+		commands[i].redi = ft_calloc(count_type(&tokens[tok], INPUT) + \
 						count_type(&tokens[tok], OUTPUT) + \
 						count_type(&tokens[tok], HEREDOC) + \
 						count_type(&tokens[tok], APPEND) + 1, sizeof(char *));
-		if (!commands[i + 1])
+		if (!commands[i].redi)
 			return (-1);
-		point_words(commands[i], &tokens[tok]);
-		point_redirections(commands[i + 1], &tokens[tok]);
+		point_words(commands[i].cmd, &tokens[tok]);
+		point_redirections(commands[i].redi, &tokens[tok]);
 		while (tokens[tok].type != PIPE && tokens[tok + 1].type != -1)
 			tok++;
 		tok++;

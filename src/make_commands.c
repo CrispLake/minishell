@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 18:22:21 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/17 16:23:38 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/18 10:24:16 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,23 +51,26 @@ static int	count_commands(t_token *tokens)
 	return (count);
 }
 
-char	***make_commands(t_token *tokens)
+t_command	*make_commands(t_token *tokens)
 {
-	char	***commands;
-	int		count;
-	int		i;
+	t_command	*commands;
+	int			count;
+	int			i;
 
 	count = count_commands(tokens);
 	if (count < 0)
 		return (NULL);
-	commands = ft_calloc(count * 2 + 1, sizeof(char **));
+	commands = ft_calloc(count + 1, sizeof(char **));
 	if (!commands)
 		return (NULL);
-	i = 0;
 	if (place_pointers(commands, tokens))
 	{
-		while (commands[i])
-			free(commands[i++]);
+		i = 0;
+		while (commands[i].cmd)
+			free(commands[i++].cmd);
+		i = 0;
+		while (commands[i].redi)
+			free(commands[i++].redi);
 		free(commands);
 		return (NULL);
 	}
