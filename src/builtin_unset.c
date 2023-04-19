@@ -6,7 +6,7 @@
 /*   By: jole <jole@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 12:05:24 by jole              #+#    #+#             */
-/*   Updated: 2023/04/18 12:29:58 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/18 14:05:51 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	delete_env(char *str, int len)
 	}
 }
 
-int	builtin_unset(char *str)
+int	unset_string(char *str)
 {
 	int	i;
 	int	len;
@@ -52,5 +52,15 @@ int	builtin_unset(char *str)
 			break ;
 		}
 	}
+	return (0);
+}
+
+int	builtin_unset(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+		unset_string(array[i++]);
 	return (0);
 }

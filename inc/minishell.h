@@ -6,11 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:00:45 by emajuri           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/04/18 12:26:20 by jole             ###   ########.fr       */
-=======
-/*   Updated: 2023/04/14 22:51:13 by emajuri          ###   ########.fr       */
->>>>>>> 2bb144a8f5a3207265a6224cffb34d43da24b06c
+/*   Updated: 2023/04/18 18:20:57 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +56,11 @@ void	ctrl_d_handler(void);
 
 int		count_quotes(char *pipeline);
 
+//Builtins
 int		builtin_pwd(void);
 void	builtin_env(void);
-int		builtin_export(char *str);
-int		builtin_unset(char *str);
+int		builtin_export(char **array);
+int		builtin_unset(char **array);
+void	builtin_echo(char **array);
 
 #endif

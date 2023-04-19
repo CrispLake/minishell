@@ -6,7 +6,7 @@
 #    By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/30 12:38:01 by emajuri           #+#    #+#              #
-#    Updated: 2023/04/18 12:35:15 by jole             ###   ########.fr        #
+#    Updated: 2023/04/18 18:20:35 by jole             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ NAME = minishell
 #Delete debug_prints when not needed anymore
 SRC = debug_prints.c $(NAME).c print_error.c tokenization.c tokenization_helpers.c \
 	  sig_handler.c count_quotes.c init_env.c make_commands.c make_commands_helpers.c \
-	  helper_functions.c builtin_env.c builtin_pwd.c builtin_export.c builtin_unset.c
+	  helper_functions.c builtin_env.c builtin_pwd.c builtin_export.c builtin_unset.c \
+	  builtin_echo.c
 
 OBJ = $(addprefix obj/,$(SRC:%.c=%.o))
 

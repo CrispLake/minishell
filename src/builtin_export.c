@@ -6,7 +6,7 @@
 /*   By: jole <jole@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 12:02:58 by jole              #+#    #+#             */
-/*   Updated: 2023/04/18 12:26:19 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/19 16:39:54 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,21 @@ int	expand_env(void)
 	return (0);
 }
 
-int	check_for_env_duplicates(char *str)
+int	check_for_env_duplicates(char *str, int i)
 {
-	int		i;
 	int		len;
 	char	*new_str;
 	char	*check;
 
-	i = -1;
 	check = ft_strchr(str, '=');
-	if (!check)
-		return (-1);
-	len = check - str + 1;
-	if (len - 1 < 1)
-		return (-1);
+	if (check != 0)
+	{
+		len = check - str + 1;
+		if (len - 1 < 1)
+			return (-1);
+	}
+	else
+		len = ft_strlen(str);
 	while (g_vars.env.env[++i])
 	{
 		if (ft_strncmp(g_vars.env.env[i], str, len) == 0)
@@ -76,12 +77,17 @@ int	check_env_name(char *str)
 	char	*check;
 
 	check = ft_strchr(str, '=');
-	if (!check)
-		return (-1);
-	len = check - str;
+	if (check != 0)
+		len = check - str;
+	else
+		len = ft_strlen(str);
 	i = 1;
-	if (!ft_isalpha(*str) && len)
+	if (!ft_isalpha(*str) && str[0] != '_' && len)
+	{
+		if (ft_strncmp(str, "-n", 3) != 0)
+			printf("minishell: export: '%s': not a valid identifier\n", str);
 		return (-1);
+	}
 	while (str[i] && (len - 1))
 	{
 		if (!ft_isalnum(str[i]) && str[i] != '_')
@@ -92,7 +98,7 @@ int	check_env_name(char *str)
 	return (0);
 }
 
-int	builtin_export(char *str)
+int	export_string(char *str)
 {
 	int	i;
 
@@ -101,7 +107,7 @@ int	builtin_export(char *str)
 			return (-1);
 	if (check_env_name(str) == -1)
 		return (-1);
-	i = check_for_env_duplicates(str);
+	i = check_for_env_duplicates(str, -1);
 	if (i == -1 || i == 1)
 	{
 		if (i == -1)
@@ -118,5 +124,15 @@ int	builtin_export(char *str)
 		i++;
 	}
 	g_vars.env.items++;
+	return (0);
+}
+
+int	builtin_export(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+		export_string(array[i++]);
 	return (0);
 }

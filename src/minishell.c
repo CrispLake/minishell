@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/18 12:36:46 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/19 16:39:55 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,14 @@ int	main(int argc, char **argv)
 			ctrl_d_handler();
 		count_quotes(pipeline);
 	//	builtin_pwd();
-	//	builtin_env();
-	//	builtin_export("TEST==hei");
-	//	builtin_unset("TEST");
+		char **split = ft_split("_moi 1moi 7-n -n -n TEST=hei JUU=moi TESTI1=hei TESTI2=hei TESTI3=hei TESTI4=hei", ' ');
+		char **split3 = ft_split("TEST", ' ');
+		builtin_export(split);
+		builtin_export(split3);
+		//char **split2 = ft_split("TEST JUU TEST TESTI TES TESTI TESTI1", ' ');
+		//builtin_unset(split2);
+		builtin_env();
+		//builtin_echo(split);
 		if (count_quotes(pipeline))
 		{
 			print_error("Unclosed quotes", pipeline);
