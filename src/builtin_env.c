@@ -6,17 +6,18 @@
 /*   By: jole <jole@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 12:02:36 by jole              #+#    #+#             */
-/*   Updated: 2023/04/18 12:02:48 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/19 18:26:30 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	builtin_env(void)
+int	builtin_env(void)
 {
 	int	i;
 
 	i = 0;
 	while (g_vars.env.env[i])
 		printf("%s\n", g_vars.env.env[i++]);
+	return (0);
 }
