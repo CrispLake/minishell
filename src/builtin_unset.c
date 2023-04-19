@@ -6,7 +6,7 @@
 /*   By: jole <jole@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 12:05:24 by jole              #+#    #+#             */
-/*   Updated: 2023/04/18 14:05:51 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/19 18:29:09 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,12 @@ int	unset_string(char *str)
 	return (0);
 }
 
-int	builtin_unset(char **array)
+int	builtin_unset(char **args)
 {
 	int	i;
 
 	i = 0;
-	while (array[i])
-		unset_string(array[i++]);
+	while (args[i])
+		unset_string(args[i++]);
 	return (0);
 }

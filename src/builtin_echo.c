@@ -6,22 +6,22 @@
 /*   By: jole <jole@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 13:40:44 by jole              #+#    #+#             */
-/*   Updated: 2023/04/18 18:30:00 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/19 18:31:29 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	builtin_echo(char **array)
+int	builtin_echo(char **args)
 {
 	int	i;
 	int	flag;
 
 	i = 0;
 	flag = 0;
-	while (array[i])
+	while (args[i])
 	{
-		if (ft_strncmp(array[i], "-n", 3) == 0)
+		if (ft_strncmp(args[i], "-n", 3) == 0)
 		{
 			i++;
 			flag = 1;
@@ -29,12 +29,13 @@ void	builtin_echo(char **array)
 		else
 			break ;
 	}
-	while (array[i])
+	while (args[i])
 	{
-		printf("%s", array[i++]);
-		if (array[i] != NULL)
+		printf("%s", args[i++]);
+		if (args[i] != NULL)
 			printf(" ");
 	}
 	if (flag != 1)
 		printf("\n");
+	return (0);
 }

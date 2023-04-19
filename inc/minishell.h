@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:00:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/18 18:20:57 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/19 19:04:38 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,16 @@
 # include <termios.h>
 # define METACHARS "|<> \t\n"
 
-
 typedef struct s_env
 {
-	char **env;
-	int	size;
-	int	items;
+	char	**env;
+	int		size;
+	int		items;
 }				t_env;
 
 typedef struct s_vars
 {
-	t_env env;
+	t_env	env;
 }				t_vars;
 
 t_vars	g_vars;
@@ -58,9 +57,9 @@ int		count_quotes(char *pipeline);
 
 //Builtins
 int		builtin_pwd(void);
-void	builtin_env(void);
-int		builtin_export(char **array);
-int		builtin_unset(char **array);
-void	builtin_echo(char **array);
+int		builtin_env(void);
+int		builtin_export(char **args);
+int		builtin_unset(char **args);
+int		builtin_echo(char **args);
 
 #endif
