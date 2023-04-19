@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/18 12:36:46 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/19 20:50:37 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,10 @@ int	main(void)
 			free(tokens);
 			continue ;
 		}
+		free(tokens);
 		print_commands(commands);
 		i = 0;
-		while (tokens[i].str)
-			free(tokens[i++].str);
-		free(tokens);
-		i = 0;
+		//PYSCHOFREE
 		while (commands[i].cmd)
 			free(commands[i++].cmd);
 		i = 0;

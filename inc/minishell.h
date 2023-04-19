@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:00:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/19 18:26:51 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/19 18:28:30 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void		get_signals(void);
 void		close_echo_control(struct termios *t);
 void		open_echo_control(struct termios *t);
 void		ctrl_d_handler(void);
-
 
 //Builtins
 int			builtin_pwd(void);
