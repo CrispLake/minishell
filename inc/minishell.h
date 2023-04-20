@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:00:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/20 17:53:50 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/20 19:46:48 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <unistd.h>
 # include <signal.h>
 # include <termios.h>
+# include <dirent.h>
 # define METACHARS "|<> \t\n"
 
 typedef struct s_env
@@ -63,5 +64,6 @@ int		builtin_export(char **args);
 int		builtin_unset(char **args);
 int		builtin_echo(char **args);
 int		builtin_exit(char **args);
+int		builtin_cd(char **args);
 
 #endif

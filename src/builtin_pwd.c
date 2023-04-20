@@ -6,7 +6,7 @@
 /*   By: jole <jole@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 12:01:59 by jole              #+#    #+#             */
-/*   Updated: 2023/04/18 12:02:24 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/20 19:28:01 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	builtin_pwd(void)
 		printf("%s\n", cwd);
 	else
 	{
-		perror("Error in getcwd");
+		perror("minishell: Error in getcwd");
 		return (-1);
 	}
 	return (0);
