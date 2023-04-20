@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:00:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/19 19:04:38 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/20 17:48:53 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_env
 typedef struct s_vars
 {
 	t_env	env;
+	int		last_exit;
 }				t_vars;
 
 t_vars	g_vars;
@@ -61,5 +62,6 @@ int		builtin_env(void);
 int		builtin_export(char **args);
 int		builtin_unset(char **args);
 int		builtin_echo(char **args);
+int		builtin_exit(char **args);
 
 #endif

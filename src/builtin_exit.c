@@ -1,42 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_env.c                                         :+:      :+:    :+:   */
+/*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jole <jole@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/18 12:06:11 by jole              #+#    #+#             */
-/*   Updated: 2023/04/20 14:52:52 by jole             ###   ########.fr       */
+/*   Created: 2023/04/20 13:51:57 by jole              #+#    #+#             */
+/*   Updated: 2023/04/20 17:48:51 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	init_env(void)
+int	check_exit_code(char *str)
 {
-	extern char	**environ;
-	int			i;
-	int			j;
+	int	i;
 
 	i = 0;
-	ft_bzero(&g_vars, sizeof(t_vars));
-	while (environ[i])
+	if (str[i] == '-' || str[i] == '+')
 		i++;
-	g_vars.env.size = i + 5;
-	g_vars.env.env = ft_calloc((i + 5), sizeof(char *));
-	if (!g_vars.env.env)
-		return (-1);
-	j = 0;
-	while (environ[j])
+	while (str[i])
 	{
-		i = ft_strlen(environ[j]);
-		g_vars.env.env[j] = ft_calloc((i + 1), sizeof(char));
-		if (!g_vars.env.env[j])
+		if (!ft_isdigit(str[i++]))
+		{
+			ft_putstr_fd("minishell: exit: ", 2);
+			ft_putstr_fd(str, 2);
+			ft_putstr_fd(" numeric argument required\n", 2);
 			return (-1);
-		ft_strlcpy(g_vars.env.env[j], environ[j], i + 1);
-		g_vars.env.items++;
-		i = 0;
-		j++;
+		}
 	}
 	return (0);
+}
+
+int	builtin_exit(char **args)
+{
+	ft_putstr_fd("exit\n", 2);
+	if (!args)
+		exit(g_vars.last_exit);
+	if (check_exit_code(args[0]) == -1)
+		exit(-1);
+	exit(ft_atoi(args[0]));
+	
 }
