@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 18:35:02 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/20 18:00:18 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/20 20:43:02 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,11 @@ int	add_filepath(char **cmd)
 	return (0);
 }
 
+void	child(t_fd *fds)
+{
+	//builtin_export(""); shllvl+1;
+}
+
 int	execute_cmds(t_command *cmds)
 {
 	t_fd	fds;
@@ -139,23 +144,23 @@ int	execute_cmds(t_command *cmds)
 	ft_bzero(&fds, sizeof(t_fd));
 	while (total--)
 	{
-		// if (make_fd(&fds, total, fds.pipe[0], cmds[i].redi))
-			// continue;
+		if (make_fd(&fds, total, fds.pipe[0], cmds[i].redi))
+			continue ;
 		if (!cmds[i].cmd[0])
 		{
 			// parent
-			continue;
+			continue ;
 		}
 		if (add_filepath(cmds[i].cmd))
 		{
 			free(pids);
 			return (-1);
 		}
-		// pids[i] = fork();
-		// if (pids[i] == -1)
-		// 	fork_error();
-		// else if (pids[i] == 0)
-		// 	child(&fds);
+		pids[i] = fork();
+		if (pids[i] == -1)
+			fork_error();
+		else if (pids[i] == 0)
+			child(&fds);
 		// parent(&fds);
 		i++;
 	}
