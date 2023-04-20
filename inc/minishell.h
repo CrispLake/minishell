@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:00:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/19 18:28:30 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/20 17:56:32 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <unistd.h>
 # include <signal.h>
 # include <termios.h>
+# include <fcntl.h>
 # define METACHARS "|<> \t\n"
 
 //Debug

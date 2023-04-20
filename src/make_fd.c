@@ -6,34 +6,63 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 14:47:46 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/20 17:40:49 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/20 19:41:19 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-#include <unistd.h>
 
+int	input_redi(t_fd *fds, char **redi)
+{
+	close(fds->fd_in);
+	if (redi[0][1] == '<')
+		return (-1);
+	fds->fd_in = open(redi[1], O_RDONLY);
+	if (fds->fd_in < 0)
+	{
+		perror("minishell");
+		return (-1);
+	}
+	return (0);
+}
 
-// void	dup_fds(t_vars *vars, int fd1, int fd2)
-// {
-// 	vars->fd_in = dup(fd1);
-// 	if (vars->fd_in == -1)
-// 		free_perror(vars->pids);
-// 	if (close(fd1) == -1)
-// 		free_perror(vars->pids);
-// 	vars->fd_out = dup(fd2);
-// 	if (vars->fd_out == -1)
-// 		free_perror(vars->pids);
-// 	if (close(fd2) == -1)
-// 		free_perror(vars->pids);
-// }
+int	output_redi(t_fd *fds, char **redi)
+{
+	close(fds->fd_out);
+	if (redi[0][1] == '>')
+		fds->fd_out = open(redi[1], O_CREAT | O_WRONLY | O_APPEND, 0644);
+	else
+		fds->fd_out = open(redi[1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (fds->fd_out < 0)
+	{
+		perror("minishell");
+		return (-1);
+	}
+	return (0);
+}
+
+int	redirections(t_fd *fds, char **redi)
+{
+	int	i;
+
+	i = 0;
+	while (redi[i])
+	{
+		if (redi[i][0] == '<')
+		{
+			if (input_redi(fds, &redi[i]))
+				return (-1);
+		}
+		else
+			if (output_redi(fds, &redi[i]))
+				return (-1);
+		i += 2;
+	}
+	return (0);
+}
 
 int	make_fd(t_fd *fds, int total, int old, char **redi)
 {
-	int	i;
-	// int	file;
-
-	i = 0;
 	if (total && pipe(fds->pipe))
 	{
 		if (old)
@@ -42,10 +71,14 @@ int	make_fd(t_fd *fds, int total, int old, char **redi)
 	}
 	if (old)
 		fds->fd_in = old;
+	else
+		fds->fd_in = 0;
 	if (total)
 		fds->fd_out = fds->pipe[1];
-	while (redi[i])
-	{
-	}
+	else
+		fds->fd_out = 0;
+	if (redi)
+		if (redirections(fds, redi))
+			return (-1);
 	return (0);
 }

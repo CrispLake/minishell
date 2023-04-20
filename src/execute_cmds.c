@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 18:35:02 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/20 17:46:42 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/20 18:00:18 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,10 +140,7 @@ int	execute_cmds(t_command *cmds)
 	while (total--)
 	{
 		// if (make_fd(&fds, total, fds.pipe[0], cmds[i].redi))
-		// {
-		// 	free(pids);
-		// 	return (-1);
-		// }
+			// continue;
 		if (!cmds[i].cmd[0])
 		{
 			// parent
