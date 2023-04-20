@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/18 12:36:46 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/20 17:53:30 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,12 @@ int	main(void)
 		open_echo_control(&t);
 		if (!pipeline)
 			ctrl_d_handler();
-	//	builtin_pwd();
-	//	builtin_env();
-	//	builtin_export("TEST==hei");
-	//	builtin_unset("TEST");
+		//builtin_pwd();
+		//builtin_export();
+		//builtin_unset();
+		//builtin_env();
+		//builtin_echo();
+		//builtin_exit();
 		if (count_quotes(pipeline))
 		{
 			print_error("Unclosed quotes", pipeline);

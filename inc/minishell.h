@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:00:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/18 12:26:20 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/20 17:53:50 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,13 @@ typedef struct s_env
 	char	**env;
 	int		size;
 	int		items;
-}	t_env;
+}				t_env;
 
 typedef struct s_vars
 {
 	t_env	env;
-}	t_vars;
+	int		last_exit;
+}				t_vars;
 
 t_vars		g_vars;
 
@@ -65,8 +66,10 @@ int		count_quotes(char *pipeline);
 
 //Builtins
 int		builtin_pwd(void);
-void	builtin_env(void);
-int		builtin_export(char *str);
-int		builtin_unset(char *str);
+int		builtin_env(void);
+int		builtin_export(char **args);
+int		builtin_unset(char **args);
+int		builtin_echo(char **args);
+int		builtin_exit(char **args);
 
 #endif
