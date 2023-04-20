@@ -12,8 +12,10 @@
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
 # include "../libft/libft.h"
 # include "tokenization.h"
+# include "execution.h"
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -23,6 +25,11 @@
 # include <termios.h>
 # include <dirent.h>
 # define METACHARS "|<> \t\n"
+
+//Debug
+void		print_tokens(t_token *tokens);
+void		print_commands(t_command *commands);
+//endofdebug
 
 typedef struct s_env
 {
@@ -37,23 +44,24 @@ typedef struct s_vars
 	int		last_exit;
 }				t_vars;
 
-t_vars	g_vars;
+t_vars		g_vars;
 
-int		init_env(void);
-void	rl_replace_line(const char *text, int clear_undo);
-void	print_error(const char *error_message, char *input);
+int			init_env(void);
+void		rl_replace_line(const char *text, int clear_undo);
+void		print_error(const char *error_message, char *input);
 void	free_double_pointer(char **array);
 
 //Parsing
-t_token	*tokenization(char *pipeline);
-int		count_quotes(char *pipeline);
-char	***make_commands(t_token *tokens);
+t_token		*tokenization(char *pipeline);
+int			count_quotes(char *pipeline);
+t_command	*make_commands(t_token *tokens);
+int			place_pointers(t_command *commands, t_token *tokens);
 
 //Signals
-void	get_signals(void);
-void	close_echo_control(struct termios *t);
-void	open_echo_control(struct termios *t);
-void	ctrl_d_handler(void);
+void		get_signals(void);
+void		close_echo_control(struct termios *t);
+void		open_echo_control(struct termios *t);
+void		ctrl_d_handler(void);
 
 int		count_quotes(char *pipeline);
 
