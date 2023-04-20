@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 18:35:02 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/20 16:54:17 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/20 17:46:42 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	count_cmds(t_command *cmds)
 
 int	check_for_builtin(char *cmd)
 {
+	if (!cmd)
+		return (0);
 	if (!ft_strncmp(cmd, "echo", 5))
 		return (B_ECHO);
 	if (!ft_strncmp(cmd, "cd", 3))
@@ -103,7 +105,6 @@ int	test_paths(char **cmd)
 
 int	add_filepath(char **cmd)
 {
-
 	if (ft_strchr(cmd[0], '/'))
 	{
 		if (access(cmd[0], F_OK) || access(cmd[0], R_OK | X_OK))
@@ -143,6 +144,11 @@ int	execute_cmds(t_command *cmds)
 		// 	free(pids);
 		// 	return (-1);
 		// }
+		if (!cmds[i].cmd[0])
+		{
+			// parent
+			continue;
+		}
 		if (add_filepath(cmds[i].cmd))
 		{
 			free(pids);
