@@ -36,9 +36,9 @@ int	main(void)
 		//builtin_env();
 		//builtin_echo();
 		//builtin_exit();
-		char **split = ft_split("testi", ' ');
-		builtin_cd(split);
-		builtin_env();
+		//char **split = ft_split("testi", ' ');
+		//builtin_cd(split);
+		//builtin_env();
 		if (count_quotes(pipeline))
 		{
 			print_error("Unclosed quotes", pipeline);
