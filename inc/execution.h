@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 17:46:30 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/19 14:54:16 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/20 16:54:04 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,18 @@ typedef struct s_command
 	char	**redi;
 }	t_command;
 
-enum builtins
+enum e_builtins
 {
-	ECHO = 1,
-	CD = 2,
-	PWD = 3,
-	EXPORT = 4,
-	UNSET = 5,
-	ENV = 6,
-	EXIT = 7
+	B_ECHO = 1,
+	B_CD = 2,
+	B_PWD = 3,
+	B_EXPORT = 4,
+	B_UNSET = 5,
+	B_ENV = 6,
+	B_EXIT = 7
 };
 
-int	make_fd(t_fd *fds, int total, int *old, char **redi);
+int	make_fd(t_fd *fds, int total, int old, char **redi);
+int	execute_cmds(t_command *cmds);
 
 #endif

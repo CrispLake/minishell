@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 16:36:11 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/18 10:59:09 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/20 16:46:10 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,10 @@ void	print_commands(t_command *commands)
 
 	printf("\n@@@@@@@@@@@@@\n\n");
 	i = 0;
-	while (commands[i].cmd)
+	while (commands[i].cmd || commands[i].redi)
 	{
 		i2 = 0;
-		printf("%p \n", commands[i].cmd);
-		printf("%d: \n", i);
+		printf("command: %d: \n", i);
 		while (commands[i].cmd[i2])
 		{
 			printf("%s\n", commands[i].cmd[i2]);

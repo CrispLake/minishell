@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/19 20:50:37 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/20 16:46:57 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,6 @@ int	main(void)
 		open_echo_control(&t);
 		if (!pipeline)
 			ctrl_d_handler();
-	//	builtin_pwd();
-	//	builtin_env();
-	//	builtin_export("TEST==hei");
-	//	builtin_unset("TEST");
 		if (count_quotes(pipeline))
 		{
 			print_error("Unclosed quotes", pipeline);
@@ -56,6 +52,8 @@ int	main(void)
 			continue ;
 		}
 		free(tokens);
+		print_commands(commands);
+		execute_cmds(commands);
 		print_commands(commands);
 		i = 0;
 		//PYSCHOFREE

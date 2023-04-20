@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 18:35:02 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/19 20:58:41 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/20 16:54:17 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,20 @@ int	count_cmds(t_command *cmds)
 
 int	check_for_builtin(char *cmd)
 {
-	if (ft_strncmp(cmd, "echo", 5))
-		return (ECHO);
-	if (ft_strncmp(cmd, "cd", 3))
-		return (CD);
-	if (ft_strncmp(cmd, "pwd", 4))
-		return (PWD);
-	if (ft_strncmp(cmd, "export", 7))
-		return (EXPORT);
-	if (ft_strncmp(cmd, "unset", 6))
-		return (UNSET);
-	if (ft_strncmp(cmd, "env", 4))
-		return (ENV);
-	if (ft_strncmp(cmd, "exit", 5))
-		return (EXIT);
+	if (!ft_strncmp(cmd, "echo", 5))
+		return (B_ECHO);
+	if (!ft_strncmp(cmd, "cd", 3))
+		return (B_CD);
+	if (!ft_strncmp(cmd, "pwd", 4))
+		return (B_PWD);
+	if (!ft_strncmp(cmd, "export", 7))
+		return (B_EXPORT);
+	if (!ft_strncmp(cmd, "unset", 6))
+		return (B_UNSET);
+	if (!ft_strncmp(cmd, "env", 4))
+		return (B_ENV);
+	if (!ft_strncmp(cmd, "exit", 5))
+		return (B_EXIT);
 	return (0);
 }
 
@@ -48,19 +48,20 @@ int	call_builtin(char **cmd)
 
 	ret = 0;
 	builtin = check_for_builtin(cmd[0]);
+	printf("BUILTIN: %d\n", builtin);
 	if (builtin == ECHO)
 		ret = 0;
-	else if (builtin == CD)
+	else if (builtin == B_CD)
 		ret = 0;
-	else if (builtin == PWD)
+	else if (builtin == B_PWD)
 		ret = builtin_pwd();
-	else if (builtin == EXPORT)
+	else if (builtin == B_EXPORT)
 		ret = builtin_export(cmd[1]);
-	else if (builtin == UNSET)
+	else if (builtin == B_UNSET)
 		ret = builtin_unset(cmd[1]);
-	else if (builtin == ENV)
+	else if (builtin == B_ENV)
 		ret = builtin_env();
-	else if (builtin == EXIT)
+	else if (builtin == B_EXIT)
 		ret = 0;
 	return (ret);
 }
@@ -128,24 +129,34 @@ int	execute_cmds(t_command *cmds)
 
 	i = 0;
 	total = count_cmds(cmds);
+	printf("Total command count: %d\n", total);
 	if (total == 1 && check_for_builtin(cmds->cmd[0]))
 		return (call_builtin(cmds->cmd));
 	pids = ft_calloc(total, sizeof(int));
 	if (!pids)
 		return (-1);
-	while (cmds[i].cmd)
+	ft_bzero(&fds, sizeof(t_fd));
+	while (total--)
 	{
-		make_fd(&fds, total, fds.pipe, cmds[i].redi);
-		if (add_filepath(cmds[i].cmd[0]))
-			error();
-		pids[i] = fork();
-		free(cmds[i].cmd[0]);
-		if (pids[i] == -1)
-			fork_error();
-		else if (pids[i] == 0)
-			child(&fds);
-		parent(&fds);
+		// if (make_fd(&fds, total, fds.pipe[0], cmds[i].redi))
+		// {
+		// 	free(pids);
+		// 	return (-1);
+		// }
+		if (add_filepath(cmds[i].cmd))
+		{
+			free(pids);
+			return (-1);
+		}
+		// pids[i] = fork();
+		// if (pids[i] == -1)
+		// 	fork_error();
+		// else if (pids[i] == 0)
+		// 	child(&fds);
+		// parent(&fds);
+		i++;
 	}
-	wait_all(pids);
+	// wait_all(pids);
+	free(pids);
 	return (0);
 }
