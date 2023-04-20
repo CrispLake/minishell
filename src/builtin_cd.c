@@ -48,17 +48,17 @@ int	builtin_cd(char **args)
 	}
 	if (export_to_env("OLDPWD=") == -1)
 	{
-		perror("minishell: ");
+		perror("minishell: cd");
 		return (-1);
 	}
 	if (chdir(args[0]))
 	{
-		perror("minishell: ");
+		perror("minishell: cd");
 		return (-1);
 	}
 	if (export_to_env("PWD=") == -1)
 	{
-		perror("minishell: ");
+		perror("minishell: cd");
 		return (-1);
 	}
 	return (0);
