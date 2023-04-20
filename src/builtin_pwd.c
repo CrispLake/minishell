@@ -20,7 +20,7 @@ int	builtin_pwd(void)
 		printf("%s\n", cwd);
 	else
 	{
-		perror("minishell: Error in getcwd");
+		perror("minishell: pwd");
 		return (-1);
 	}
 	return (0);
