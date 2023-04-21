@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 14:47:46 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/20 19:41:19 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/21 13:37:08 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,10 @@ int	make_fd(t_fd *fds, int total, int old, char **redi)
 	else
 		fds->fd_in = 0;
 	if (total)
+	{
 		fds->fd_out = fds->pipe[1];
+		fds->pipe[1] = 0;
+	}
 	else
 		fds->fd_out = 0;
 	if (redi)
