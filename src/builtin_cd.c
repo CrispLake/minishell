@@ -6,7 +6,7 @@
 /*   By: jole <jole@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 18:01:29 by jole              #+#    #+#             */
-/*   Updated: 2023/04/20 19:46:47 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/21 13:31:36 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	export_to_env(char *env)
 {
 	char	*str1;
 	char	*str2;
-	char	**split;
 	char	buf[1024];
 
 	str1 = getcwd(buf, sizeof(buf));
@@ -25,13 +24,8 @@ int	export_to_env(char *env)
 	str2 = ft_strjoin(env, str1);
 	if (!str2)
 		return (-1);
-	split = ft_split(str2, ' ');
+	export_string(str2);
 	free(str2);
-	if (!split)
-		return (-1);
-	printf("string is %s\n", split[0]);
-	builtin_export(split);
-	free_double_pointer(split);
 	return (0);
 }
 
