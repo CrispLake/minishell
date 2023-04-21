@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:00:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/20 19:46:48 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/21 13:31:38 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int		count_quotes(char *pipeline);
 int		builtin_pwd(void);
 int		builtin_env(void);
 int		builtin_export(char **args);
+int		export_string(char *str);
 int		builtin_unset(char **args);
 int		builtin_echo(char **args);
 int		builtin_exit(char **args);
