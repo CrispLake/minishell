@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:00:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/21 14:03:39 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/21 14:15:47 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,13 @@ void		open_echo_control(struct termios *t);
 void		ctrl_d_handler(void);
 
 //Builtins
-int			builtin_pwd(void);
-int			builtin_env(void);
-int			builtin_export(char **args);
-int			export_string(char *str);
-int			builtin_unset(char **args);
 int			builtin_echo(char **args);
-int			builtin_exit(char **args);
 int			builtin_cd(char **args);
+int			builtin_pwd(void);
+int			builtin_export(char **args);
+int			builtin_unset(char **args);
+int			builtin_env(void);
+int			builtin_exit(char **args);
+int			export_string(char *str);
 
 #endif

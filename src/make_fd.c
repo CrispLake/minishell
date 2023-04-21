@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 14:47:46 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/21 13:37:08 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/21 15:40:59 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int	make_fd(t_fd *fds, int total, int old, char **redi)
 	{
 		if (old)
 			close(old);
+		perror("minishell: pipe");
 		return (-1);
 	}
 	if (old)
@@ -80,8 +81,10 @@ int	make_fd(t_fd *fds, int total, int old, char **redi)
 	}
 	else
 		fds->fd_out = 0;
-	if (redi)
+	if (redi[0])
+	{
 		if (redirections(fds, redi))
 			return (-1);
+	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 18:35:02 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/21 13:54:33 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/21 15:50:27 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,21 +53,20 @@ int	call_builtin(char **cmd)
 
 	ret = 0;
 	builtin = check_for_builtin(cmd[0]);
-	printf("BUILTIN: %d\n", builtin);
-	if (builtin == ECHO)
-		ret = 0;
+	if (builtin == B_ECHO)
+		ret = builtin_echo(&cmd[1]);
 	else if (builtin == B_CD)
-		ret = 0;
+		ret = builtin_cd(&cmd[1]);
 	else if (builtin == B_PWD)
 		ret = builtin_pwd();
 	else if (builtin == B_EXPORT)
-		ret = builtin_export(cmd[1]);
+		ret = builtin_export(&cmd[1]);
 	else if (builtin == B_UNSET)
-		ret = builtin_unset(cmd[1]);
+		ret = builtin_unset(&cmd[1]);
 	else if (builtin == B_ENV)
 		ret = builtin_env();
 	else if (builtin == B_EXIT)
-		ret = 0;
+		ret = builtin_exit(&cmd[1]);
 	return (ret);
 }
 
@@ -136,10 +135,10 @@ int	add_filepath(char **cmd)
 
 void	child(char **cmd, t_fd *fds)
 {
-	//builtin_export(""); shllvl+1;
+	increment_shlvl();
 	if (fds->fd_in)
 	{
-		if (dup2(fds->fd_in, STDIN_FILENO))
+		if (dup2(fds->fd_in, STDIN_FILENO) == -1)
 		{
 			perror("minishell");
 			exit(-1);
@@ -148,7 +147,7 @@ void	child(char **cmd, t_fd *fds)
 	}
 	if (fds->fd_out)
 	{
-		if (dup2(fds->fd_out, STDOUT_FILENO))
+		if (dup2(fds->fd_out, STDOUT_FILENO) == -1)
 		{
 			perror("minishell");
 			exit(-1);
@@ -157,6 +156,8 @@ void	child(char **cmd, t_fd *fds)
 	}
 	if (fds->pipe[0])
 		close(fds->pipe[0]);
+	if (check_for_builtin(cmd[0]))
+		exit(call_builtin(cmd));
 	execve(cmd[0], cmd, g_vars.env.env);
 	perror("minishell");
 	exit(-1);
@@ -196,7 +197,6 @@ int	execute_cmds(t_command *cmds)
 	i = 0;
 	total = count_cmds(cmds);
 	savetotal = total;
-	printf("Total command count: %d\n", total);
 	if (total == 1 && check_for_builtin(cmds->cmd[0]))
 		return (call_builtin(cmds->cmd));
 	pids = ft_calloc(total, sizeof(int));
