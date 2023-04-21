@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:00:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/21 13:47:53 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/21 15:48:13 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void		rl_replace_line(const char *text, int clear_undo);
 void		print_error(const char *error_message, char *input);
 void		free_double_pointer(char **array);
 int			increment_shlvl(void);
+char		*expand_var_in_string(char *str);
 
 //Parsing
 t_token		*tokenization(char *pipeline);
@@ -63,8 +64,6 @@ void		get_signals(void);
 void		close_echo_control(struct termios *t);
 void		open_echo_control(struct termios *t);
 void		ctrl_d_handler(void);
-
-int			count_quotes(char *pipeline);
 
 //Builtins
 int			builtin_pwd(void);

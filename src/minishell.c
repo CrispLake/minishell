@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/21 13:49:10 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/21 20:46:07 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,14 @@ int	main(void)
 		//builtin_exit();
 		//builtin_cd();
 		//increment_shlvl();
+		expand_var_in_string("\"$PWD\"");
+		printf("\n");
+		expand_var_in_string("\'$PWD\'");
+		printf("\n");
+		expand_var_in_string("\"\'$PWD\'\"");
+		printf("\n");
+		expand_var_in_string("\'\"$PWD\'");
+		printf("\n");
 		if (count_quotes(pipeline))
 		{
 			print_error("Unclosed quotes", pipeline);
@@ -60,7 +68,7 @@ int	main(void)
 			free(tokens);
 			continue ;
 		}
-		print_commands(commands);
+		//print_commands(commands);
 		i = 0;
 		while (tokens[i].str)
 			free(tokens[i++].str);
