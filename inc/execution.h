@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 17:46:30 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/20 16:54:04 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/21 20:57:19 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,7 @@ enum e_builtins
 
 int	make_fd(t_fd *fds, int total, int old, char **redi);
 int	execute_cmds(t_command *cmds);
+int	check_for_builtin(char *cmd);
+int	add_filepath(char **cmd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 14:47:46 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/21 15:40:59 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/21 22:54:25 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	input_redi(t_fd *fds, char **redi)
 {
-	close(fds->fd_in);
+	if (fds->fd_in)
+		close(fds->fd_in);
 	if (redi[0][1] == '<')
 		return (-1);
 	fds->fd_in = open(redi[1], O_RDONLY);
@@ -28,7 +29,8 @@ int	input_redi(t_fd *fds, char **redi)
 
 int	output_redi(t_fd *fds, char **redi)
 {
-	close(fds->fd_out);
+	if (fds->fd_out)
+		close(fds->fd_out);
 	if (redi[0][1] == '>')
 		fds->fd_out = open(redi[1], O_CREAT | O_WRONLY | O_APPEND, 0644);
 	else
@@ -70,17 +72,14 @@ int	make_fd(t_fd *fds, int total, int old, char **redi)
 		perror("minishell: pipe");
 		return (-1);
 	}
-	if (old)
-		fds->fd_in = old;
-	else
-		fds->fd_in = 0;
+	fds->fd_in = old;
 	if (total)
-	{
 		fds->fd_out = fds->pipe[1];
-		fds->pipe[1] = 0;
-	}
 	else
+	{
 		fds->fd_out = 0;
+		fds->pipe[0] = 0;
+	}
 	if (redi[0])
 	{
 		if (redirections(fds, redi))

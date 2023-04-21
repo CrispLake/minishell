@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/21 15:42:20 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/21 22:11:57 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ int	main(void)
 			continue ;
 		}
 		free(tokens);
-		print_commands(commands);
+		// print_commands(commands);
 		execute_cmds(commands);
 		// print_commands(commands);
-		i = 0;
 		//PYSCHOFREE
+		i = 0;
 		while (commands[i].cmd)
 			free(commands[i++].cmd);
 		i = 0;
