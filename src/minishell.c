@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/21 13:31:26 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/21 13:47:51 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,8 @@ int	main(void)
 		//builtin_env();
 		//builtin_echo();
 		//builtin_exit();
-		//char **split = ft_split("testi", ' ');
-		//builtin_cd(split);
-		//builtin_env();
+		//builtin_cd();
+		//increment_shlvl();
 		if (count_quotes(pipeline))
 		{
 			print_error("Unclosed quotes", pipeline);
