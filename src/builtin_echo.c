@@ -1,27 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_pwd.c                                      :+:      :+:    :+:   */
+/*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jole <jole@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/18 12:01:59 by jole              #+#    #+#             */
-/*   Updated: 2023/04/20 19:28:01 by jole             ###   ########.fr       */
+/*   Created: 2023/04/18 13:40:44 by jole              #+#    #+#             */
+/*   Updated: 2023/04/19 18:31:29 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	builtin_pwd(void)
+int	builtin_echo(char **args)
 {
-	char	cwd[1024];
+	int	i;
+	int	flag;
 
-	if (getcwd(cwd, sizeof(cwd)) != NULL)
-		printf("%s\n", cwd);
-	else
+	i = 0;
+	flag = 0;
+	while (args[i])
 	{
-		perror("minishell: pwd");
-		return (-1);
+		if (ft_strncmp(args[i], "-n", 3) == 0)
+		{
+			i++;
+			flag = 1;
+		}
+		else
+			break ;
 	}
+	while (args[i])
+	{
+		printf("%s", args[i++]);
+		if (args[i] != NULL)
+			printf(" ");
+	}
+	if (flag != 1)
+		printf("\n");
 	return (0);
 }

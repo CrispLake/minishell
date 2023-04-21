@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:00:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/20 17:56:32 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/21 14:03:39 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <signal.h>
 # include <termios.h>
 # include <fcntl.h>
+# include <dirent.h>
 # define METACHARS "|<> \t\n"
 
 //Debug
@@ -41,6 +42,7 @@ typedef struct s_env
 typedef struct s_vars
 {
 	t_env	env;
+	int		last_exit;
 }	t_vars;
 
 t_vars		g_vars;
@@ -49,6 +51,7 @@ int			init_env(void);
 void		rl_replace_line(const char *text, int clear_undo);
 void		print_error(const char *error_message, char *input);
 void		free_double_pointer(char **array);
+int			increment_shlvl(void);
 
 //Parsing
 t_token		*tokenization(char *pipeline);
@@ -64,8 +67,12 @@ void		ctrl_d_handler(void);
 
 //Builtins
 int			builtin_pwd(void);
-int			builtin_export(char *str);
-int			builtin_unset(char *str);
 int			builtin_env(void);
+int			builtin_export(char **args);
+int			export_string(char *str);
+int			builtin_unset(char **args);
+int			builtin_echo(char **args);
+int			builtin_exit(char **args);
+int			builtin_cd(char **args);
 
 #endif

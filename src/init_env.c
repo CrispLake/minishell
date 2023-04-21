@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jole <jole@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/14 20:54:40 by jole              #+#    #+#             */
-/*   Updated: 2023/04/18 12:06:29 by jole             ###   ########.fr       */
+/*   Created: 2023/04/18 12:06:11 by jole              #+#    #+#             */
+/*   Updated: 2023/04/20 14:52:52 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	init_env(void)
 	int			j;
 
 	i = 0;
+	ft_bzero(&g_vars, sizeof(t_vars));
 	while (environ[i])
 		i++;
 	g_vars.env.size = i + 5;
