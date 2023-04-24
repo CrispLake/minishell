@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 18:35:02 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/21 22:08:30 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/24 13:49:53 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,34 @@ int	call_builtin(char **cmd)
 		ret = builtin_env();
 	else if (builtin == B_EXIT)
 		ret = builtin_exit(&cmd[1]);
+	return (ret);
+}
+
+int	builtin_with_redi(t_command *cmd, t_fd *fds)
+{
+	int	ret;
+	int	save_stdout;
+
+	ret = 0;
+	make_fd(fds, 0, 0, cmd->redi);
+	if (fds->fd_out)
+	{
+		save_stdout = dup(STDOUT_FILENO);
+		if (dup2(fds->fd_out, STDOUT_FILENO) == -1)
+		{
+			perror("minishell");
+			return (-1);
+		}
+	}
+	ret = call_builtin(cmd->cmd);
+	if (fds->fd_out)
+	{
+		if (dup2(save_stdout, STDOUT_FILENO) == -1)
+		{
+			perror("minishell");
+			return (-1);
+		}
+	}
 	return (ret);
 }
 
@@ -135,12 +163,12 @@ int	execute_cmds(t_command *cmds)
 	i = 0;
 	total = count_cmds(cmds);
 	savetotal = total;
+	ft_bzero(&fds, sizeof(t_fd));
 	if (total == 1 && check_for_builtin(cmds->cmd[0]))
-		return (call_builtin(cmds->cmd));
+		return (builtin_with_redi(cmds, &fds));
 	pids = ft_calloc(total, sizeof(int));
 	if (!pids)
 		return (-1);
-	ft_bzero(&fds, sizeof(t_fd));
 	while (total--)
 	{
 		if (make_fd(&fds, total, fds.pipe[0], cmds[i].redi))
