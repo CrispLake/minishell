@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:00:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/21 15:48:13 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/24 16:02:46 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,18 @@ typedef struct s_env
 	int		items;
 }				t_env;
 
+typedef struct s_vector
+{
+	char	*str;
+	int		size;
+	int		chars;
+}				t_vector;
+
 typedef struct s_vars
 {
-	t_env	env;
-	int		last_exit;
+	t_env		env;
+	t_vector	vector;
+	int			last_exit;
 }				t_vars;
 
 t_vars		g_vars;
