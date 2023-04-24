@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 14:47:46 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/21 22:54:25 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/24 15:52:18 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	input_redi(t_fd *fds, char **redi)
 	fds->fd_in = open(redi[1], O_RDONLY);
 	if (fds->fd_in < 0)
 	{
-		perror("minishell");
+		perror("minishell: input_redi");
 		return (-1);
 	}
 	return (0);
@@ -37,7 +37,7 @@ int	output_redi(t_fd *fds, char **redi)
 		fds->fd_out = open(redi[1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fds->fd_out < 0)
 	{
-		perror("minishell");
+		perror("minishell: output_redi");
 		return (-1);
 	}
 	return (0);

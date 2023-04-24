@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 20:35:29 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/21 20:54:41 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/24 16:36:17 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ int	add_filepath(char **cmd)
 		}
 	}
 	else if (!check_for_builtin(cmd[0]) && test_paths(cmd))
-		{
-			perror("minishell: COMMAND HERE SOMEHOW");
-			return (-1);
-		}
+	{
+		perror("minishell: COMMAND HERE SOMEHOW");
+		return (-1);
+	}
 	return (0);
 }

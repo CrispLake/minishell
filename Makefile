@@ -6,7 +6,7 @@
 #    By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/30 12:38:01 by emajuri           #+#    #+#              #
-#    Updated: 2023/04/21 20:54:24 by emajuri          ###   ########.fr        #
+#    Updated: 2023/04/24 16:42:06 by emajuri          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRC = debug_prints.c $(NAME).c print_error.c tokenization.c \
 	  tokenization_helpers.c sig_handler.c count_quotes.c init_env.c \
 	  make_commands.c make_commands_helpers.c helper_functions.c builtin_env.c \
 	  builtin_pwd.c builtin_export.c builtin_unset.c execute_cmds.c make_fd.c \
-	  builtin_echo.c builtin_exit.c builtin_cd.c add_filepath.c
+	  builtin_echo.c builtin_exit.c builtin_cd.c add_filepath.c execute_cmds_helpers.c
 
 OBJ = $(addprefix obj/,$(SRC:%.c=%.o))
 

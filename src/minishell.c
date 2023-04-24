@@ -6,12 +6,13 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/21 22:11:57 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/24 15:51:08 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 #include <readline/history.h>
+#include <stdio.h>
 
 int	main(void)
 {
@@ -23,7 +24,8 @@ int	main(void)
 
 	tcgetattr(0, &t);
 	get_signals();
-	init_env();
+	if (init_env())
+		perror("minishell");
 	while (1)
 	{
 		close_echo_control(&t);
