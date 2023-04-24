@@ -6,7 +6,7 @@
 /*   By: jole <jole@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 12:02:58 by jole              #+#    #+#             */
-/*   Updated: 2023/04/19 19:04:40 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/24 17:01:18 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	expand_env(void)
 		}
 		ft_strlcpy(g_vars.env.env[i], tmp[i], len + 1);
 	}
-	i = 0;
 	free_double_pointer(tmp);
 	return (0);
 }
