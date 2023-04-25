@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 14:47:46 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/25 18:49:14 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/25 21:24:56 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,13 @@ void	write_heredoc(int fd, char *delim)
 		free(line);
 		line = readline("~> ");
 	}
-	write(1, "\033[1A", 4);
-	write(1, "\033[3C", 5);
+	if (line)
+		free(line);
+	else
+	{
+		write(1, "\033[1A", 4);
+		write(1, "\033[3C", 5);
+	}
 	open_echo_control(&t);
 	close(fd);
 }
