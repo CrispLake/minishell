@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:00:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/24 16:02:46 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/25 18:58:30 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,18 @@ void		rl_replace_line(const char *text, int clear_undo);
 void		print_error(const char *error_message, char *input);
 void		free_double_pointer(char **array);
 int			increment_shlvl(void);
-char		*expand_var_in_string(char *str);
+int			expand_variables(t_token *tokens);
 
 //Parsing
 t_token		*tokenization(char *pipeline);
 int			count_quotes(char *pipeline);
 t_command	*make_commands(t_token *tokens);
 int			place_pointers(t_command *commands, t_token *tokens);
+
+//Expand
+int			expand_vector(t_vector *v_str);
+int			expand_dollar(t_vector *v_str);
+int			if_env_expand(t_Vector *v_str, char *str, int len);
 
 //Signals
 void		get_signals(void);

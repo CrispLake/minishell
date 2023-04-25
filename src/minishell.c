@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/24 21:40:52 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/25 17:07:23 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ int	main(void)
 		//builtin_echo();
 		//builtin_exit();
 		//builtin_cd();
-		//increment_shlvl();
-		expand_var_in_string(pipeline);
 		if (count_quotes(pipeline))
 		{
 			print_error("Unclosed quotes", pipeline);
@@ -51,6 +49,7 @@ int	main(void)
 			print_error("Malloc error in tokenization", pipeline);
 			continue ;
 		}
+		expand_variables(tokens);
 		commands = make_commands(tokens);
 		if (!commands)
 		{
