@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 20:35:29 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/24 16:36:17 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/25 20:15:52 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,17 +74,23 @@ static int	test_paths(char **cmd)
 
 int	add_filepath(char **cmd)
 {
+	char	*tmp;
+
 	if (ft_strchr(cmd[0], '/'))
 	{
 		if (access(cmd[0], F_OK) || access(cmd[0], R_OK | X_OK))
 		{
-			perror("minishell: COMMAND HERE SOMEHOW");
+			tmp = ft_strjoin("minishell: ", cmd[0]);
+			perror(tmp);
+			free(tmp);
 			return (-1);
 		}
 	}
 	else if (!check_for_builtin(cmd[0]) && test_paths(cmd))
 	{
-		perror("minishell: COMMAND HERE SOMEHOW");
+		tmp = ft_strjoin("minishell: ", cmd[0]);
+		perror(tmp);
+		free(tmp);
 		return (-1);
 	}
 	return (0);

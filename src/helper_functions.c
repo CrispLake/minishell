@@ -6,11 +6,18 @@
 /*   By: jole <jole@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:52:42 by jole              #+#    #+#             */
-/*   Updated: 2023/04/21 13:46:42 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/25 18:26:01 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+void	print_error(const char *error_message, char *input)
+{
+	write(2, error_message, ft_strlen(error_message));
+	write(2, "\n", 1);
+	free(input);
+}
 
 void	free_double_pointer(char **array)
 {
@@ -43,4 +50,15 @@ int	increment_shlvl(void)
 	export_string(str2);
 	free(str2);
 	return (0);
+}
+
+void	sigint_heredoc(int sig)
+{
+	char	buf[2];
+
+	(void)sig;
+	g_vars.status = 1;
+	buf[0] = 4;
+	buf[1] = 0;
+	ioctl(STDIN_FILENO, TIOCSTI, buf);
 }

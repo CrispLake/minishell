@@ -6,13 +6,11 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/24 15:51:08 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/25 16:59:04 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-#include <readline/history.h>
-#include <stdio.h>
 
 int	main(void)
 {
@@ -23,11 +21,11 @@ int	main(void)
 	int				i;
 
 	tcgetattr(0, &t);
-	get_signals();
 	if (init_env())
 		perror("minishell");
 	while (1)
 	{
+		get_signals();
 		close_echo_control(&t);
 		pipeline = readline("minishell ~>");
 		open_echo_control(&t);

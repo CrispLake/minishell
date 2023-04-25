@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:00:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/21 14:15:47 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/25 17:10:15 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_vars
 {
 	t_env	env;
 	int		last_exit;
+	int		status;
 }	t_vars;
 
 t_vars		g_vars;
@@ -64,6 +65,7 @@ void		get_signals(void);
 void		close_echo_control(struct termios *t);
 void		open_echo_control(struct termios *t);
 void		ctrl_d_handler(void);
+void		sigint_heredoc(int sig);
 
 //Builtins
 int			builtin_echo(char **args);

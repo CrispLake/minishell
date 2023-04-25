@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 18:35:02 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/24 16:44:51 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/25 18:23:31 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	redirect_or_skip(t_fd *fds, t_command *cmd, int total)
 {
 	if (make_fd(fds, total, fds->pipe[0], cmd->redi))
 		return (-1);
-	if (!cmd->cmd[0])
+	if (!cmd->cmd[0] && !g_vars.status)
 	{
 		parent(fds);
 		return (-1);
@@ -85,6 +85,31 @@ int	parent_and_child(t_fd *fds, t_command *cmds, int i, int *pids)
 	return (0);
 }
 
+int	loop_cmds(t_command *cmds, t_fd *fds, int total, int *pids)
+{
+	int	i;
+
+	i = 0;
+	while (total--)
+	{
+		if (redirect_or_skip(fds, &cmds[i], total))
+			continue ;
+		if (g_vars.status)
+		{
+			g_vars.status = 0;
+			parent(fds);
+			free(pids);
+			if (fds->pipe[0] > 2)
+				close(fds->pipe[0]);
+			return (-1);
+		}
+		if (parent_and_child(fds, cmds, i, pids))
+			return (-1);
+		i++;
+	}
+	return (0);
+}
+
 int	execute_cmds(t_command *cmds)
 {
 	t_fd	fds;
@@ -100,15 +125,9 @@ int	execute_cmds(t_command *cmds)
 	pids = ft_calloc(total, sizeof(int));
 	if (!pids)
 		return (-1);
-	while (total--)
-	{
-		if (redirect_or_skip(&fds, &cmds[i], total))
-			continue ;
-		if (parent_and_child(&fds, cmds, i, pids))
-			return (-1);
-		i++;
-	}
-	wait_all(pids, count_cmds(cmds));
+	if (loop_cmds(cmds, &fds, total, pids))
+		return (-1);
+	wait_all(pids, total);
 	free(pids);
 	return (0);
 }
