@@ -6,7 +6,7 @@
 /*   By: jole <jole@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 14:05:50 by jole              #+#    #+#             */
-/*   Updated: 2023/04/25 20:11:51 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/25 20:24:54 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ char	*expand_var_in_string(char *str)
 	char		*new_str;
 	int			i;
 	int			delim;
-	//int			error_check;
+	int			error_check;
 
 	v_str.size = 50;
 	v_str.str = ft_calloc(v_str.size, sizeof(char));
@@ -100,20 +100,20 @@ char	*expand_var_in_string(char *str)
 	while (str[i])
 	{
 		delim = 0;
-		if (str[i] == '\'' || str[i] == '\"')
-		   delim = str[i++];
-		//error_check = i;
+		error_check = i;
+		if ((str[i] == '\'' || str[i] == '\"') && ++error_check > 0)
+			delim = str[i++];
 		else
 			i += copy_till_quotes(&v_str, &str[i]);
 		if (str[i] && delim == '\'')
 			i += copy_till_delim_single(&v_str, &str[i]);
 		else if (str[i] && delim == '\"')
 			i += copy_till_delim_double(&v_str, &str[i]);
-		//if (error_check > i)
-		//{
-		//	free(v_str.str);
-		//	return (str);
-		//}
+		if (error_check > i)
+		{
+			free(v_str.str);
+			return (str);
+		}
 	}
 	new_str = ft_strdup(v_str.str);
 	free(v_str.str);
