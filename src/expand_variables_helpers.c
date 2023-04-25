@@ -6,7 +6,7 @@
 /*   By: jole <jole@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 18:56:30 by jole              #+#    #+#             */
-/*   Updated: 2023/04/25 18:58:27 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/25 20:11:49 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,11 @@ int	if_env_expand(t_vector *v_str, char *str, int len)
 	i = 0;
 	x = len + 1;
 	if (str[0] == '?')
+	{
 		if (expand_dollar(v_str))
 			return (-1);
+		return (-2);
+	}
 	while (g_vars.env.env[i])
 	{
 		if (!ft_strncmp(g_vars.env.env[i], str, len) && g_vars.env.env[i][len] == '=')
@@ -74,5 +77,5 @@ int	if_env_expand(t_vector *v_str, char *str, int len)
 		}
 		i++;
 	}
-	return (-1);
+	return (len);
 }

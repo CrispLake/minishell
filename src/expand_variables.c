@@ -6,7 +6,7 @@
 /*   By: jole <jole@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 14:05:50 by jole              #+#    #+#             */
-/*   Updated: 2023/04/25 18:58:28 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/25 20:11:51 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,13 @@ int	copy_till_quotes(t_vector *v_str, char *str)
 		{
 			i++;
 			len = 0;
-			while (str[i] && str[i] != '\'' && str[i] != '\"' && str[i] != ' ')
+			while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 			{
 				len++;
 				i++;
 			}
-			if_env_expand(v_str, &str[i - len], len);
+			if (if_env_expand(v_str, &str[i - len], len) == -2)
+				i++;
 		}
 		else
 		{
@@ -61,13 +62,13 @@ int	copy_till_delim_double(t_vector *v_str, char *str)
 	int	len;
 
 	i = 0;
-	while (str[i] && str[i] != '\"')
+	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_' || str[i] == '$') && str[i] != '\"')
 	{
 		if (str[i] == '$')
 		{
 			i++;
 			len = 0;
-			while (str[i] && str[i] != '\"' && str[i] != '\'' && str[i] != ' ')
+			while (str[i] && (ft_isalnum(str[i]) || str[i] == '_' || str[i] == '\''))
 			{
 				len++;
 				i++;
