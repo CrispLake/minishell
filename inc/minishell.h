@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:00:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/26 15:46:22 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/26 19:54:59 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,13 @@ typedef struct s_env
 	int		items;
 }	t_env;
 
+typedef struct s_vector
+{
+	char	*str;
+	int		size;
+	int		chars;
+}				t_vector;
+
 typedef struct s_vars
 {
 	t_env	env;
@@ -53,6 +60,7 @@ void		rl_replace_line(const char *text, int clear_undo);
 int			print_error(const char *error_message, char *input);
 void		free_double_pointer(char **array);
 int			increment_shlvl(void);
+int			expand_variables(t_token *tokens);
 void		free_commands(t_command *commands);
 
 //Parsing
@@ -60,6 +68,13 @@ t_token		*tokenization(char *pipeline);
 int			count_quotes(char *pipeline);
 t_command	*make_commands(t_token *tokens);
 int			place_pointers(t_command *commands, t_token *tokens);
+
+//Expand
+int			expand_vector(t_vector *v_str);
+int			expand_dollar(t_vector *v_str);
+int			if_env_expand(t_vector *v_str, char *str, int len, int i);
+int			init_vector(t_vector *v_str);
+char		*error_in_check(t_vector *v_str);
 
 //Signals
 void		get_signals(void);
