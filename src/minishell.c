@@ -6,23 +6,29 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/26 15:47:02 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/26 16:59:36 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	parsing(char *pipeline)
+t_command	*parsing(char *pipeline)
 {
 	t_token		*tokens;
 	t_command	*commands;
 	int			i;
 
 	if (count_quotes(pipeline))
-		return (print_error("Unclosed quotes", pipeline));
+	{
+		print_error("Unclosed quotes", pipeline);
+		return (0);
+	}
 	tokens = tokenization(pipeline);
 	if (!tokens)
-		return (print_error("Malloc error in tokenization", pipeline));
+	{
+		print_error("Malloc error in tokenization", pipeline);
+		return (0);
+	}
 	commands = make_commands(tokens);
 	if (!commands)
 	{
@@ -30,10 +36,12 @@ int	parsing(char *pipeline)
 		while (tokens[i].str)
 			free(tokens[i++].str);
 		free(tokens);
-		return (print_error("Error in make_commands", pipeline));
+		
+		print_error("Error in make_commands", pipeline);
+		return (0);
 	}
 	free(tokens);
-	return (0);
+	return (commands);
 }
 
 int	main(void)
@@ -45,6 +53,7 @@ int	main(void)
 	tcgetattr(0, &t);
 	if (init_env())
 		perror("minishell");
+	increment_shlvl();
 	while (1)
 	{
 		get_signals();
@@ -54,7 +63,8 @@ int	main(void)
 		if (!pipeline)
 			ctrl_d_handler();
 		add_history(pipeline);
-		if (parsing(pipeline))
+		commands = parsing(pipeline);
+		if (!commands)
 			continue ;
 		execute_cmds(commands);
 		free_commands(commands);
