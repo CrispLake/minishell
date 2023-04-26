@@ -6,22 +6,28 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 16:38:03 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/24 16:45:05 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/26 14:25:02 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+#include <sys/wait.h>
 
 void	wait_all(int *pids, int total)
 {
 	int	i;
 	int	status;
+	int	check;
 
 	i = 0;
+	check = 0;
 	while (i < total)
 	{
 		waitpid(pids[i], &status, 0);
-		g_vars.last_exit = status;
+		if (WIFEXITED(status))
+			g_vars.last_exit = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status) && check++ == 0)
+			printf("Quit: %d\n", WTERMSIG(status));
 		i++;
 	}
 }

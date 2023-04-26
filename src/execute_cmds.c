@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 18:35:02 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/25 18:23:31 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/26 14:09:33 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int	parent_and_child(t_fd *fds, t_command *cmds, int i, int *pids)
 	else if (pids[i] == 0)
 	{
 		increment_shlvl();
+		signal(SIGQUIT, SIG_DFL);
 		child(cmds[i].cmd, fds);
 	}
 	parent(fds);
