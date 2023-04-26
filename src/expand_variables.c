@@ -6,7 +6,7 @@
 /*   By: jole <jole@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 14:05:50 by jole              #+#    #+#             */
-/*   Updated: 2023/04/26 16:55:39 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/26 19:55:13 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,8 @@ int	copy_till_delim_double(t_vector *v_str, char *str, int i, int len)
 	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_' || \
 				str[i] == '$') && str[i] != '\"')
 	{
-		if (str[i] == '$')
+		if (str[i] == '$' && ++i > 0)
 		{
-			i++;
 			len = 0;
 			while (str[i] && (ft_isalnum(str[i]) || \
 						str[i] == '_' || str[i] == '\''))
@@ -104,7 +103,7 @@ char	*expand_var_in_string(char *str, int i, int delim, int error_check)
 		else if (str[i] && delim == '\"')
 			i += copy_till_delim_double(&v_str, &str[i], 0, 0);
 		if (error_check > i)
-			return (error_in_check(v_str));
+			return (error_in_check(&v_str));
 	}
 	return (v_str.str);
 }

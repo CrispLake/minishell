@@ -6,7 +6,7 @@
 /*   By: jole <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 15:21:43 by jole              #+#    #+#             */
-/*   Updated: 2023/04/07 16:47:47 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/25 20:13:20 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ void	open_echo_control(struct termios *t)
 
 void	ctrl_d_handler(void)
 {
-	write(1, "\033[1A", 4);
-	write(1, "\033[13C", 5);
+	write(1, "\033[1A\033[13C", 9);
 	write(1, "exit\n", 5);
 	exit(1);
 }

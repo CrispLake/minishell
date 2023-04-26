@@ -6,72 +6,77 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/26 15:25:17 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/26 19:52:03 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
+t_command	*parsing(char *pipeline)
+{
+	t_token		*tokens;
+	t_command	*commands;
+	int			i;
+
+	if (count_quotes(pipeline))
+	{
+		print_error("Unclosed quotes", pipeline);
+		return (0);
+	}
+	tokens = tokenization(pipeline);
+	if (!tokens)
+	{
+		print_error("Malloc error in tokenization", pipeline);
+		return (0);
+	}
+	if (expand_variables(tokens))
+	{
+		print_error("Malloc error in tokenization", pipeline);
+		i = 0;
+		while (tokens[i].str)
+			free(tokens[i++].str);
+		free(tokens);
+		return (0);
+	}
+	commands = make_commands(tokens);
+	if (!commands)
+	{
+		i = 0;
+		while (tokens[i].str)
+			free(tokens[i++].str);
+		free(tokens);
+		
+		print_error("Error in make_commands", pipeline);
+		return (0);
+	}
+	free(tokens);
+	return (commands);
+}
+
 int	main(void)
 {
 	char			*pipeline;
 	struct termios	t;
-	t_token			*tokens;
 	t_command		*commands;
-	int				i;
 
 	tcgetattr(0, &t);
-	get_signals();
-	init_env();
+	if (init_env())
+		perror("minishell");
+	increment_shlvl();
 	while (1)
 	{
+		get_signals();
 		close_echo_control(&t);
 		pipeline = readline("minishell ~>");
 		open_echo_control(&t);
 		if (!pipeline)
 			ctrl_d_handler();
 		add_history(pipeline);
-		//builtin_pwd();
-		//builtin_export();
-		//builtin_unset();
-		//builtin_env();
-		//builtin_echo();
-		//builtin_exit();
-		//builtin_cd();
-		if (count_quotes(pipeline))
-		{
-			print_error("Unclosed quotes", pipeline);
-			continue ;
-		}
-		tokens = tokenization(pipeline);
-		if (!tokens)
-		{
-			print_error("Malloc error in tokenization", pipeline);
-			continue ;
-		}
-		expand_variables(tokens);
-		commands = make_commands(tokens);
+		commands = parsing(pipeline);
 		if (!commands)
-		{
-			print_error("Error in make_commands", pipeline);
-			i = 0;
-			while (tokens[i].str)
-				free(tokens[i++].str);
-			free(tokens);
 			continue ;
-		}
-		//print_commands(commands);
-		i = 0;
-		while (tokens[i].str)
-			free(tokens[i++].str);
-		free(tokens);
-		i = 0;
-		while (commands[i].cmd)
-			free(commands[i++].cmd);
-		i = 0;
-		while (commands[i].redi)
-			free(commands[i++].redi);
-		free(commands);
+		execute_cmds(commands);
+		free_commands(commands);
 		free(pipeline);
 	}
 	return (0);

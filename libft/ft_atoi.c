@@ -6,7 +6,7 @@
 /*   By: emajuri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 20:16:05 by emajuri           #+#    #+#             */
-/*   Updated: 2022/10/27 15:24:22 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/20 14:12:07 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,5 @@ int	ft_atoi(const char *str)
 		str++;
 	}
 	nb *= negative;
-	if (negative == 1 && nb < 0)
-		return (-1);
-	else if (negative == -1 && nb > 0)
-		return (0);
 	return (nb);
 }

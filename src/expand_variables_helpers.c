@@ -6,7 +6,7 @@
 /*   By: jole <jole@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 18:56:30 by jole              #+#    #+#             */
-/*   Updated: 2023/04/26 16:54:13 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/26 19:55:22 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,6 @@ int	init_vector(t_vector *v_str)
 
 char	*error_in_check(t_vector *v_str)
 {
-	free(v_str.str);
+	free(v_str->str);
 	return (NULL);
 }
