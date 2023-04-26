@@ -6,7 +6,7 @@
 /*   By: jole <jole@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 14:05:50 by jole              #+#    #+#             */
-/*   Updated: 2023/04/25 20:24:54 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/26 15:32:00 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	copy_till_quotes(t_vector *v_str, char *str)
 				len++;
 				i++;
 			}
-			if (if_env_expand(v_str, &str[i - len], len) == -2)
+			if (if_env_expand(v_str, &str[i - len], len, 0) == -2)
 				i++;
 		}
 		else
@@ -73,7 +73,7 @@ int	copy_till_delim_double(t_vector *v_str, char *str)
 				len++;
 				i++;
 			}
-			if_env_expand(v_str, &str[i - len], len);
+			if_env_expand(v_str, &str[i - len], len, 0);
 		}
 		else
 		{
@@ -82,6 +82,8 @@ int	copy_till_delim_double(t_vector *v_str, char *str)
 			v_str->str[v_str->chars++] = str[i++];
 		}
 	}
+	if (str[i] && str[i] != '\"')
+		return (i);
 	return (i + 1);
 }
 
