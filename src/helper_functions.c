@@ -6,7 +6,7 @@
 /*   By: jole <jole@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:52:42 by jole              #+#    #+#             */
-/*   Updated: 2023/04/25 21:13:37 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/26 15:02:23 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,6 @@ int	increment_shlvl(void)
 	return (0);
 }
 
-void	sigint_heredoc(int sig)
-{
-	char	buf[2];
-
-	(void)sig;
-	g_vars.status = 1;
-	buf[0] = 4;
-	buf[1] = 0;
-	ioctl(STDIN_FILENO, TIOCSTI, buf);
-}
-
 void	free_commands(t_command *commands)
 {
 	int	i;
@@ -72,10 +61,10 @@ void	free_commands(t_command *commands)
 	while (commands[i].cmd || commands[i].redi)
 	{
 		i2 = 0;
-		while(commands[i].cmd[i2])
+		while (commands[i].cmd[i2])
 			free(commands[i].cmd[i2++]);
 		i2 = 0;
-		while(commands[i].redi[i2])
+		while (commands[i].redi[i2])
 			free(commands[i].redi[i2++]);
 		i++;
 	}

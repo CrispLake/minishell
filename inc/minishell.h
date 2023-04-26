@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:00:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/25 21:14:37 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/26 14:57:17 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void		print_error(const char *error_message, char *input);
 void		free_double_pointer(char **array);
 int			increment_shlvl(void);
 void		free_commands(t_command *commands);
-
 
 //Parsing
 t_token		*tokenization(char *pipeline);
