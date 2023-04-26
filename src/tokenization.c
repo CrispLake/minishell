@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 20:24:03 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/14 21:52:27 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/20 17:40:07 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,24 +37,19 @@ int	count_total(char *pipeline)
 
 int	set_token_type(char *str)
 {
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	i--;
-	if (!ft_strchr(METACHARS, str[i]))
+	if (!ft_strchr(METACHARS, str[0]))
 		return (WORD);
-	if (str[i] == '<' || str[i] == '>')
+	if (str[0] == '<')
 	{
-		if (i && str[i - 1] == '<')
+		if (str[1] == '<')
 			return (HEREDOC);
-		else if (str[i] == '<')
-			return (INPUT);
-		if (i && str[i - 1] == '>')
+		return (INPUT);
+	}
+	else if (str[0] == '>')
+	{
+		if (str[1] == '>')
 			return (APPEND);
-		else
-			return (OUTPUT);
+		return (OUTPUT);
 	}
 	return (PIPE);
 }

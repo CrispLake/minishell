@@ -6,11 +6,19 @@
 /*   By: jole <jole@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:52:42 by jole              #+#    #+#             */
-/*   Updated: 2023/04/21 13:46:42 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/26 15:47:10 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+int	print_error(const char *error_message, char *input)
+{
+	write(2, error_message, ft_strlen(error_message));
+	write(2, "\n", 1);
+	free(input);
+	return (-1);
+}
 
 void	free_double_pointer(char **array)
 {
@@ -43,4 +51,23 @@ int	increment_shlvl(void)
 	export_string(str2);
 	free(str2);
 	return (0);
+}
+
+void	free_commands(t_command *commands)
+{
+	int	i;
+	int	i2;
+
+	i = 0;
+	while (commands[i].cmd || commands[i].redi)
+	{
+		i2 = 0;
+		while (commands[i].cmd[i2])
+			free(commands[i].cmd[i2++]);
+		i2 = 0;
+		while (commands[i].redi[i2])
+			free(commands[i].redi[i2++]);
+		i++;
+	}
+	free(commands);
 }

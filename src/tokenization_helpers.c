@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 16:17:29 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/14 17:13:50 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/20 17:37:22 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	len_delim_word(char *str, int delim)
 	int	i;
 
 	i = 0;
-	while (str[i] != delim)
+	while (str[i] != delim && str[i])
 		i++;
 	return (i);
 }
@@ -57,16 +57,6 @@ int	len_word(char *str)
 			i += len_delim_word(&str[i + 1], str[i]) + 2;
 		else
 			i++;
-	}
-	if (str[i] == '<' || str[i] == '>')
-	{
-		if (is_number(str, i))
-		{
-			if (str[i] == '<' || str[i] == '>')
-				i++;
-			if (str[i] == str[i - 1])
-				i++;
-		}
 	}
 	return (i);
 }
