@@ -6,20 +6,20 @@
 /*   By: jole <jole@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 14:05:50 by jole              #+#    #+#             */
-/*   Updated: 2023/04/26 19:55:13 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/26 22:04:47 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	copy_till_quotes(t_vector *v_str, char *str, int len)
+int	copy_till_quotes(t_vector *v_str, char *str, int len, int i)
 {
-	int	i;
+	int	check;
 
-	i = 0;
 	while (str[i] && str[i] != '\'' && str[i] != '\"')
 	{
-		if (str[i] == '$')
+		if (str[i] == '$' && (str[i + 1] == '_' || ft_isalpha(str[i + 1]) || \
+			str[i + 1] == '?'))
 		{
 			i++;
 			len = 0;
@@ -28,15 +28,15 @@ int	copy_till_quotes(t_vector *v_str, char *str, int len)
 				len++;
 				i++;
 			}
-			if (if_env_expand(v_str, &str[i - len], len, 0) == -2)
+			check = if_env_expand(v_str, &str[i - len], len, 0);
+			if (check == -2)
 				i++;
+			else if (check == -1)
+				return (-1);
 		}
 		else
-		{
-			if (v_str->chars + 2 > v_str->size)
-				expand_vector(v_str);
-			v_str->str[v_str->chars++] = str[i++];
-		}
+			if (copy_char(v_str, str, &i))
+				return (-1);
 	}
 	return (i);
 }
@@ -47,41 +47,37 @@ int	copy_till_delim_single(t_vector *v_str, char *str)
 
 	i = 0;
 	while (str[i] && str[i] != '\'')
-	{
-		if (v_str->chars + 2 > v_str->size)
-			expand_vector(v_str);
-		v_str->str[v_str->chars++] = str[i++];
-	}
+		if (copy_char(v_str, str, &i))
+			return (-1);
 	return (i + 1);
 }
 
 int	copy_till_delim_double(t_vector *v_str, char *str, int i, int len)
 {
-	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_' || \
-				str[i] == '$') && str[i] != '\"')
+	int	check;
+
+	while (str[i] && str[i] != '\"')
 	{
-		if (str[i] == '$' && ++i > 0)
+		if (str[i] == '$' && (str[i + 1] == '_' || \
+			ft_isalpha(str[i + 1]) || str[i + 1] == '?') && ++i > 0)
 		{
 			len = 0;
-			while (str[i] && (ft_isalnum(str[i]) || \
-						str[i] == '_' || str[i] == '\''))
+			while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 			{
 				len++;
 				i++;
 			}
-			if (if_env_expand(v_str, &str[i - len], len, 0) == -2)
+			check = if_env_expand(v_str, &str[i - len], len, 0);
+			if (check == -2)
 				i++;
+			else if (check == -1)
+				return (-1);
 		}
 		else
-		{
-			if (v_str->chars + 2 > v_str->size)
-				expand_vector(v_str);
-			v_str->str[v_str->chars++] = str[i++];
-		}
+			if (copy_char(v_str, str, &i))
+				return (-1);
 	}
-	if (str[i] && str[i] != '\"')
-		return (i);
-	return (i + 1);
+	return (i + (str[i] == '\"'));
 }
 
 char	*expand_var_in_string(char *str, int i, int delim, int error_check)
@@ -97,13 +93,16 @@ char	*expand_var_in_string(char *str, int i, int delim, int error_check)
 		if ((str[i] == '\'' || str[i] == '\"') && ++error_check > 0)
 			delim = str[i++];
 		else
-			i += copy_till_quotes(&v_str, &str[i], 0);
+			i += copy_till_quotes(&v_str, &str[i], 0, 0);
 		if (str[i] && delim == '\'')
 			i += copy_till_delim_single(&v_str, &str[i]);
 		else if (str[i] && delim == '\"')
 			i += copy_till_delim_double(&v_str, &str[i], 0, 0);
 		if (error_check > i)
-			return (error_in_check(&v_str));
+		{
+			free(v_str.str);
+			return (NULL);
+		}
 	}
 	return (v_str.str);
 }

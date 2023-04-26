@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 18:35:02 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/26 15:00:52 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/26 17:04:08 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int	parent_and_child(t_fd *fds, t_command *cmds, int i, int *pids)
 	}
 	else if (pids[i] == 0)
 	{
-		increment_shlvl();
 		signal(SIGQUIT, SIG_DFL);
 		signal(SIGINT, SIG_DFL);
 		child(cmds[i].cmd, fds);
@@ -84,6 +83,7 @@ int	loop_cmds(t_command *cmds, t_fd *fds, int total, int *pids)
 	i = 0;
 	while (total--)
 	{
+		signal(SIGINT, SIG_IGN);
 		if (redirect_or_skip(fds, &cmds[i], total))
 			continue ;
 		if (g_vars.status)
@@ -112,7 +112,6 @@ int	execute_cmds(t_command *cmds)
 	i = 0;
 	total = count_cmds(cmds);
 	ft_bzero(&fds, sizeof(t_fd));
-	signal(SIGINT, SIG_IGN);
 	if (total == 1 && check_for_builtin(cmds->cmd[0]))
 		return (builtin_with_redi(cmds, &fds));
 	pids = ft_calloc(total, sizeof(int));

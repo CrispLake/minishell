@@ -6,7 +6,7 @@
 /*   By: jole <jole@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 18:56:30 by jole              #+#    #+#             */
-/*   Updated: 2023/04/26 19:55:22 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/26 21:35:01 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int	expand_dollar(t_vector *v_str)
 	int		i;
 
 	tmp = ft_itoa(g_vars.last_exit);
+	if (!tmp)
+		return (-1);
 	i = -1;
 	while (tmp[++i])
 	{
@@ -55,8 +57,6 @@ int	if_env_expand(t_vector *v_str, char *str, int len, int i)
 	int	x;
 
 	x = len + 1;
-	if (len == 0 && (str[0] == '\0' || str[0] == '\"'))
-		v_str->str[v_str->chars++] = '$';
 	if (str[0] == '?')
 		return (expand_dollar(v_str));
 	while (g_vars.env.env[i])
@@ -65,11 +65,8 @@ int	if_env_expand(t_vector *v_str, char *str, int len, int i)
 				g_vars.env.env[i][len] == '=')
 		{
 			while (g_vars.env.env[i][x])
-			{
-				if (v_str->chars + 2 > v_str->size)
-					expand_vector(v_str);
-				v_str->str[v_str->chars++] = g_vars.env.env[i][x++];
-			}
+				if (copy_char(v_str, g_vars.env.env[i], &x))
+					return (-1);
 			return (len);
 		}
 		i++;
@@ -87,8 +84,14 @@ int	init_vector(t_vector *v_str)
 	return (0);
 }
 
-char	*error_in_check(t_vector *v_str)
+int	copy_char(t_vector *v_str, char *str, int *i)
 {
-	free(v_str->str);
-	return (NULL);
+	if (v_str->chars + 2 > v_str->size)
+	{
+		if (expand_vector(v_str))
+			return (-1);
+	}
+	v_str->str[v_str->chars++] = str[*i];
+	(*i)++;
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jole <jole@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:52:42 by jole              #+#    #+#             */
-/*   Updated: 2023/04/26 15:47:10 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/26 16:00:01 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	print_error(const char *error_message, char *input)
 	write(2, error_message, ft_strlen(error_message));
 	write(2, "\n", 1);
 	free(input);
-	return (-1);
+	return (0);
 }
 
 void	free_double_pointer(char **array)

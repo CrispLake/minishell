@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:00:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/26 19:54:59 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/26 21:30:49 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int			expand_vector(t_vector *v_str);
 int			expand_dollar(t_vector *v_str);
 int			if_env_expand(t_vector *v_str, char *str, int len, int i);
 int			init_vector(t_vector *v_str);
-char		*error_in_check(t_vector *v_str);
+int			copy_char(t_vector *v_str, char *str, int *i);
 
 //Signals
 void		get_signals(void);
