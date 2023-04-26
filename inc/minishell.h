@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:00:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/25 21:15:50 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/26 16:56:45 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int			place_pointers(t_command *commands, t_token *tokens);
 int			expand_vector(t_vector *v_str);
 int			expand_dollar(t_vector *v_str);
 int			if_env_expand(t_vector *v_str, char *str, int len, int i);
+int			init_vector(t_vector *v_str);
 
 //Signals
 void		get_signals(void);

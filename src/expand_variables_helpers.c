@@ -6,7 +6,7 @@
 /*   By: jole <jole@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 18:56:30 by jole              #+#    #+#             */
-/*   Updated: 2023/04/26 15:32:01 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/26 16:54:13 by jole             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	if_env_expand(t_vector *v_str, char *str, int len, int i)
 	int	x;
 
 	x = len + 1;
-	if (len == 0)
+	if (len == 0 && (str[0] == '\0' || str[0] == '\"'))
 		v_str->str[v_str->chars++] = '$';
 	if (str[0] == '?')
 		return (expand_dollar(v_str));
@@ -75,4 +75,20 @@ int	if_env_expand(t_vector *v_str, char *str, int len, int i)
 		i++;
 	}
 	return (len);
+}
+
+int	init_vector(t_vector *v_str)
+{
+	v_str->size = 50;
+	v_str->str = ft_calloc(v_str->size, sizeof(char));
+	if (!v_str->str)
+		return (-1);
+	v_str->chars = 0;
+	return (0);
+}
+
+char	*error_in_check(t_vector *v_str)
+{
+	free(v_str.str);
+	return (NULL);
 }
