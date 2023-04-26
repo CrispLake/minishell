@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 14:47:46 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/26 22:05:53 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/26 23:03:46 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,11 @@ int	redirections(t_fd *fds, char **redi)
 	i = 0;
 	while (redi[i] && !g_vars.status)
 	{
+		if (!redi[i + 1][0])
+		{
+			printf("ambibious redirect\n");
+			return (-1);
+		}
 		if (redi[i][0] == '<')
 		{
 			if (input_redi(fds, &redi[i]))

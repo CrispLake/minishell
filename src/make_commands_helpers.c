@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 16:15:56 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/18 12:36:08 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/26 22:59:56 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,13 @@ static void	point_words(char **cmd, t_token *tokens)
 	cmd = NULL;
 }
 
-static void	point_redirections(char **redi, t_token *tokens)
+static void	point_redirections(char **redi, t_token *tokens, int count)
 {
 	int	i;
 
 	i = 0;
+	if (!count)
+		return ;
 	while (tokens[i].type != PIPE && tokens[i].type != -1)
 	{
 		if (tokens[i].type != WORD)
@@ -128,7 +130,7 @@ int	place_pointers(t_command *cmds, t_token *tokens)
 		if (!cmds[i].redi)
 			return (-1);
 		point_words(cmds[i].cmd, &tokens[tok]);
-		point_redirections(cmds[i].redi, &tokens[tok]);
+		point_redirections(cmds[i].redi, &tokens[tok], count_redi(&tokens[tok]));
 		while (tokens[tok].type != PIPE && tokens[tok].type != -1)
 			tok++;
 		if (tokens[tok].type == PIPE)

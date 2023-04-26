@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 18:35:02 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/26 17:04:08 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/26 23:02:43 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,10 @@ void	child(char **cmd, t_fd *fds)
 int	redirect_or_skip(t_fd *fds, t_command *cmd, int total)
 {
 	if (make_fd(fds, total, fds->pipe[0], cmd->redi))
+	{
+		parent(fds);
 		return (-1);
+	}
 	if (!cmd->cmd[0] && !g_vars.status)
 	{
 		parent(fds);
@@ -84,7 +87,7 @@ int	loop_cmds(t_command *cmds, t_fd *fds, int total, int *pids)
 	while (total--)
 	{
 		signal(SIGINT, SIG_IGN);
-		if (redirect_or_skip(fds, &cmds[i], total))
+		if (redirect_or_skip(fds, &cmds[i++], total))
 			continue ;
 		if (g_vars.status)
 		{
@@ -95,9 +98,8 @@ int	loop_cmds(t_command *cmds, t_fd *fds, int total, int *pids)
 				close(fds->pipe[0]);
 			return (-1);
 		}
-		if (parent_and_child(fds, cmds, i, pids))
+		if (parent_and_child(fds, cmds, i - 1, pids))
 			return (-1);
-		i++;
 	}
 	return (0);
 }

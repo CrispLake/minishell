@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 14:58:02 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/26 15:00:09 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/26 22:41:32 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ int	builtin_with_redi(t_command *cmd, t_fd *fds)
 	int	save_stdout;
 
 	ret = 0;
-	make_fd(fds, 0, 0, cmd->redi);
+	if (make_fd(fds, 0, 0, cmd->redi))
+		return (-1);
 	if (fds->fd_out)
 	{
 		save_stdout = dup(STDOUT_FILENO);
