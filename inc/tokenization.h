@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 16:18:06 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/18 10:15:30 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/27 16:38:39 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@ typedef struct s_token
 	char	*str;
 }	t_token;
 
-int	ft_isspace(char c);
-int	len_word(char *str);
-int	len_metachars(char *str, int metachar);
-int	len_delim_word(char *str, int delim);
+int		ft_isspace(char c);
+int		len_word(char *str);
+int		len_metachars(char *str, int metachar);
+int		len_delim_word(char *str, int delim);
+void	free_tokens(t_token *tokens);
 
 #endif

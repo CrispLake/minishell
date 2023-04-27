@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:00:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/26 21:30:49 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/27 16:38:16 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ t_token		*tokenization(char *pipeline);
 int			count_quotes(char *pipeline);
 t_command	*make_commands(t_token *tokens);
 int			place_pointers(t_command *commands, t_token *tokens);
+t_token		*remove_empty(t_token *tokens);
 
 //Expand
 int			expand_vector(t_vector *v_str);

@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 18:35:02 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/26 23:02:43 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/27 17:09:15 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,10 +118,17 @@ int	execute_cmds(t_command *cmds)
 		return (builtin_with_redi(cmds, &fds));
 	pids = ft_calloc(total, sizeof(int));
 	if (!pids)
+	{
+		free_commands(cmds);
 		return (-1);
+	}
 	if (loop_cmds(cmds, &fds, total, pids))
+	{
+		free_commands(cmds);
 		return (-1);
+	}
 	wait_all(pids, total);
 	free(pids);
+	free_commands(cmds);
 	return (0);
 }

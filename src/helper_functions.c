@@ -6,7 +6,7 @@
 /*   By: jole <jole@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:52:42 by jole              #+#    #+#             */
-/*   Updated: 2023/04/26 16:00:01 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/27 16:37:33 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,14 @@ void	free_commands(t_command *commands)
 		i++;
 	}
 	free(commands);
+}
+
+void	free_tokens(t_token *tokens)
+{
+	int	i;
+
+	i = 0;
+	while (tokens[i].str)
+		free(tokens[i++].str);
+	free(tokens);
 }
