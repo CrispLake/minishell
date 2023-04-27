@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 14:47:46 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/27 13:49:05 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/27 20:43:55 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	redirections(t_fd *fds, char **redi)
 	{
 		if (!redi[i + 1][0])
 		{
-			printf("ambiguous redirect\n");
+			printf("minishell: ambiguous redirect\n");
 			return (-1);
 		}
 		if (redi[i][0] == '<')

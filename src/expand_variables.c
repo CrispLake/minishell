@@ -6,7 +6,7 @@
 /*   By: jole <jole@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 14:05:50 by jole              #+#    #+#             */
-/*   Updated: 2023/04/26 22:04:47 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/27 19:51:52 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,18 +107,25 @@ char	*expand_var_in_string(char *str, int i, int delim, int error_check)
 	return (v_str.str);
 }
 
-int	expand_variables(t_token *tokens)
+int	expand_variables(t_token *tokens, int i)
 {
-	int		i;
+	int		j;
 	char	*tmp;
 	char	*new_str;
 
-	i = 0;
 	while (tokens[i].type != -1)
 	{
-		tmp = expand_var_in_string(tokens[i].str, 0, 0, 0);
+		j = 0;
+		while (tokens[i].str[j] == '\'' || tokens[i].str[j] == '\"')
+			j++;
+		if (!tokens[i].str[j])
+			tmp = ft_strdup("");
+		else
+			tmp = expand_var_in_string(tokens[i].str, 0, 0, 0);
 		if (!tmp)
 			return (-1);
+		if (!tmp[0] && tokens[i].str[j])
+			tokens[i].type = -2;
 		new_str = ft_strdup(tmp);
 		free(tmp);
 		if (!new_str)
