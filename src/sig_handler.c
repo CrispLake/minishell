@@ -6,7 +6,7 @@
 /*   By: jole <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 15:21:43 by jole              #+#    #+#             */
-/*   Updated: 2023/04/26 17:07:25 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/27 14:29:37 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 
 void	sigint_handler(int sig)
 {
-	sig += 0;
-	write(1, "\n", 1);
+	(void)sig;
 	rl_replace_line("", 0);
+	ioctl(STDIN_FILENO, TIOCSTI, "\n");
 	rl_on_new_line();
-	rl_redisplay();
 }
 
 void	get_signals(void)

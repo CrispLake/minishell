@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/26 23:03:11 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/27 14:32:38 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ int	main(void)
 		open_echo_control(&t);
 		if (!pipeline)
 			ctrl_d_handler();
+		if (pipeline[0] == '\0')
+			continue ;
 		add_history(pipeline);
 		commands = parsing(pipeline);
 		if (!commands)

@@ -6,7 +6,7 @@
 /*   By: jole <jole@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 13:51:57 by jole              #+#    #+#             */
-/*   Updated: 2023/04/26 19:47:15 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/27 14:37:32 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	check_exit_code(char *str)
 int	builtin_exit(char **args)
 {
 	ft_putstr_fd("exit\n", 2);
-	if (!args)
+	if (!args[0])
 		exit(g_vars.last_exit);
 	if (check_exit_code(args[0]) == -1)
 		exit(-1);
