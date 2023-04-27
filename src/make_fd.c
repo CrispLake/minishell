@@ -90,7 +90,7 @@ int	redirections(t_fd *fds, char **redi)
 	{
 		if (!redi[i + 1][0])
 		{
-			printf("ambibious redirect\n");
+			printf("ambiguous redirect\n");
 			return (-1);
 		}
 		if (redi[i][0] == '<')
