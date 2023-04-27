@@ -132,7 +132,7 @@ int	builtin_export(char **args)
 	int	c;
 
 	i = 0;
-	if (!args)
+	if (!args[0])
 	{
 		while (g_vars.env.env[i])
 		{
