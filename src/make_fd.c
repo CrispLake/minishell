@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 14:47:46 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/26 14:54:22 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/27 13:49:05 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	write_heredoc(int fd, char *delim)
 	close_echo_control(&t);
 	delim_len = ft_strlen(delim);
 	line = readline("~> ");
-	while (g_vars.status != 2 && line && ft_strncmp(line, delim, delim_len + 1))
+	while (g_vars.status != 1 && line && ft_strncmp(line, delim, delim_len + 1))
 	{
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
@@ -33,12 +33,10 @@ void	write_heredoc(int fd, char *delim)
 	if (line)
 		free(line);
 	else
-	{
-		write(1, "\033[1A", 4);
-		write(1, "\033[3C", 5);
-	}
+		write(1, "\033[1A\033[3C", 9);
 	open_echo_control(&t);
 	close(fd);
+	signal(SIGINT, SIG_IGN);
 }
 
 int	input_redi(t_fd *fds, char **redi)
@@ -90,6 +88,11 @@ int	redirections(t_fd *fds, char **redi)
 	i = 0;
 	while (redi[i] && !g_vars.status)
 	{
+		if (!redi[i + 1][0])
+		{
+			printf("ambiguous redirect\n");
+			return (-1);
+		}
 		if (redi[i][0] == '<')
 		{
 			if (input_redi(fds, &redi[i]))

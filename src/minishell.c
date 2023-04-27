@@ -6,48 +6,54 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/26 19:52:03 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/27 17:11:24 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-t_command	*parsing(char *pipeline)
+t_token	*create_tokens(char *pipeline)
 {
-	t_token		*tokens;
-	t_command	*commands;
-	int			i;
+	t_token	*tokens;
 
-	if (count_quotes(pipeline))
-	{
-		print_error("Unclosed quotes", pipeline);
-		return (0);
-	}
 	tokens = tokenization(pipeline);
 	if (!tokens)
 	{
 		print_error("Malloc error in tokenization", pipeline);
-		return (0);
+		return (NULL);
 	}
 	if (expand_variables(tokens))
 	{
-		print_error("Malloc error in tokenization", pipeline);
-		i = 0;
-		while (tokens[i].str)
-			free(tokens[i++].str);
-		free(tokens);
-		return (0);
+		print_error("Malloc error in expand_variables", pipeline);
+		free_tokens(tokens);
+		return (NULL);
 	}
+	free(pipeline);
+	tokens = remove_empty(tokens);
+	if (!tokens)
+		return (NULL);
+	return (tokens);
+}
+
+t_command	*parsing(char *pipeline)
+{
+	t_token		*tokens;
+	t_command	*commands;
+
+	if (count_quotes(pipeline))
+	{
+		print_error("Unclosed quotes", pipeline);
+		return (NULL);
+	}
+	tokens = create_tokens(pipeline);
+	if (!tokens)
+		return (NULL);
 	commands = make_commands(tokens);
 	if (!commands)
 	{
-		i = 0;
-		while (tokens[i].str)
-			free(tokens[i++].str);
-		free(tokens);
-		
+		free_tokens(tokens);
 		print_error("Error in make_commands", pipeline);
-		return (0);
+		return (NULL);
 	}
 	free(tokens);
 	return (commands);
@@ -55,9 +61,9 @@ t_command	*parsing(char *pipeline)
 
 int	main(void)
 {
-	char			*pipeline;
 	struct termios	t;
 	t_command		*commands;
+	char			*pipeline;
 
 	tcgetattr(0, &t);
 	if (init_env())
@@ -71,13 +77,13 @@ int	main(void)
 		open_echo_control(&t);
 		if (!pipeline)
 			ctrl_d_handler();
+		if (pipeline[0] == '\0')
+			continue ;
 		add_history(pipeline);
 		commands = parsing(pipeline);
 		if (!commands)
 			continue ;
 		execute_cmds(commands);
-		free_commands(commands);
-		free(pipeline);
 	}
 	return (0);
 }

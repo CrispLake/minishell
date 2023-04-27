@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 18:35:02 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/26 15:00:52 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/27 17:09:15 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,10 @@ void	child(char **cmd, t_fd *fds)
 int	redirect_or_skip(t_fd *fds, t_command *cmd, int total)
 {
 	if (make_fd(fds, total, fds->pipe[0], cmd->redi))
+	{
+		parent(fds);
 		return (-1);
+	}
 	if (!cmd->cmd[0] && !g_vars.status)
 	{
 		parent(fds);
@@ -68,7 +71,6 @@ int	parent_and_child(t_fd *fds, t_command *cmds, int i, int *pids)
 	}
 	else if (pids[i] == 0)
 	{
-		increment_shlvl();
 		signal(SIGQUIT, SIG_DFL);
 		signal(SIGINT, SIG_DFL);
 		child(cmds[i].cmd, fds);
@@ -84,7 +86,8 @@ int	loop_cmds(t_command *cmds, t_fd *fds, int total, int *pids)
 	i = 0;
 	while (total--)
 	{
-		if (redirect_or_skip(fds, &cmds[i], total))
+		signal(SIGINT, SIG_IGN);
+		if (redirect_or_skip(fds, &cmds[i++], total))
 			continue ;
 		if (g_vars.status)
 		{
@@ -95,9 +98,8 @@ int	loop_cmds(t_command *cmds, t_fd *fds, int total, int *pids)
 				close(fds->pipe[0]);
 			return (-1);
 		}
-		if (parent_and_child(fds, cmds, i, pids))
+		if (parent_and_child(fds, cmds, i - 1, pids))
 			return (-1);
-		i++;
 	}
 	return (0);
 }
@@ -112,15 +114,21 @@ int	execute_cmds(t_command *cmds)
 	i = 0;
 	total = count_cmds(cmds);
 	ft_bzero(&fds, sizeof(t_fd));
-	signal(SIGINT, SIG_IGN);
 	if (total == 1 && check_for_builtin(cmds->cmd[0]))
 		return (builtin_with_redi(cmds, &fds));
 	pids = ft_calloc(total, sizeof(int));
 	if (!pids)
+	{
+		free_commands(cmds);
 		return (-1);
+	}
 	if (loop_cmds(cmds, &fds, total, pids))
+	{
+		free_commands(cmds);
 		return (-1);
+	}
 	wait_all(pids, total);
 	free(pids);
+	free_commands(cmds);
 	return (0);
 }

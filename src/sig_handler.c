@@ -6,7 +6,7 @@
 /*   By: jole <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 15:21:43 by jole              #+#    #+#             */
-/*   Updated: 2023/04/25 20:13:20 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/27 17:38:59 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 
 void	sigint_handler(int sig)
 {
-	sig += 0;
-	write(1, "\n", 1);
+	(void)sig;
 	rl_replace_line("", 0);
+	ioctl(STDIN_FILENO, TIOCSTI, "\n");
 	rl_on_new_line();
-	rl_redisplay();
 }
 
 void	get_signals(void)
@@ -41,7 +40,6 @@ void	open_echo_control(struct termios *t)
 
 void	ctrl_d_handler(void)
 {
-	write(1, "\033[1A\033[13C", 9);
 	write(1, "exit\n", 5);
 	exit(1);
 }

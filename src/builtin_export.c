@@ -6,7 +6,7 @@
 /*   By: jole <jole@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 12:02:58 by jole              #+#    #+#             */
-/*   Updated: 2023/04/24 17:01:18 by jole             ###   ########.fr       */
+/*   Updated: 2023/04/27 15:23:33 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	expand_env(void)
 {
 	int		i;
-	int		len;
 	char	**tmp;
 
 	tmp = g_vars.env.env;
@@ -29,15 +28,14 @@ int	expand_env(void)
 	i = -1;
 	while (tmp[++i])
 	{
-		len = ft_strlen(tmp[i]);
-		g_vars.env.env[i] = ft_calloc((len + 1), sizeof(char));
+		g_vars.env.env[i] = ft_calloc((ft_strlen(tmp[i]) + 1), sizeof(char));
 		if (!g_vars.env.env[i])
 		{
 			free_double_pointer(tmp);
 			free_double_pointer(g_vars.env.env);
 			return (-1);
 		}
-		ft_strlcpy(g_vars.env.env[i], tmp[i], len + 1);
+		ft_strlcpy(g_vars.env.env[i], tmp[i], ft_strlen(tmp[i]) + 1);
 	}
 	free_double_pointer(tmp);
 	return (0);
