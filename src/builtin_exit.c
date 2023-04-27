@@ -42,7 +42,7 @@ int	builtin_exit(char **args)
 	if (args[1])
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-		return (-1);
+		exit(-1);
 	}
 	exit(ft_atoi(args[0]));
 }
