@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/27 17:11:24 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/27 19:52:26 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,12 @@ t_token	*create_tokens(char *pipeline)
 		print_error("Malloc error in tokenization", pipeline);
 		return (NULL);
 	}
-	if (expand_variables(tokens))
+	if (expand_variables(tokens, 0))
 	{
 		print_error("Malloc error in expand_variables", pipeline);
 		free_tokens(tokens);
 		return (NULL);
 	}
-	free(pipeline);
 	tokens = remove_empty(tokens);
 	if (!tokens)
 		return (NULL);
@@ -49,10 +48,10 @@ t_command	*parsing(char *pipeline)
 	if (!tokens)
 		return (NULL);
 	commands = make_commands(tokens);
+	free(pipeline);
 	if (!commands)
 	{
 		free_tokens(tokens);
-		print_error("Error in make_commands", pipeline);
 		return (NULL);
 	}
 	free(tokens);

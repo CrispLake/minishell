@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 16:36:11 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/20 16:46:10 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/27 19:16:43 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@ void	print_tokens(t_token *tokens)
 
 	i = 0;
 	printf("---\n");
-	while (tokens[i].str)
+	while (tokens[i].type != -1)
 	{
 		printf("type: %d, %s+\n", tokens[i].type, tokens[i].str);
 		i++;
 	}
+	printf("type: %d, %s+\n", tokens[i].type, tokens[i].str);
 	printf("---\n");
 }
 

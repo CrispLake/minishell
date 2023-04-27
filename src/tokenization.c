@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 20:24:03 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/20 17:40:07 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/27 19:24:14 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	count_total(char *pipeline)
 
 int	set_token_type(char *str)
 {
-	if (!ft_strchr(METACHARS, str[0]))
+	if (!str[0] || !ft_strchr(METACHARS, str[0]))
 		return (WORD);
 	if (str[0] == '<')
 	{
