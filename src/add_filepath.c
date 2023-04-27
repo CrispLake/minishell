@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 20:35:29 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/26 22:05:14 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/27 18:58:43 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,11 @@ static char	*add_str_to_path(char *path, char *str)
 	return (tmp2);
 }
 
-static int	test_paths(char **cmd)
+static int	loop_paths(char **cmd, char **paths)
 {
-	char	**paths;
-	int		i;
 	char	*full;
+	int		i;
 
-	paths = get_paths();
 	i = -1;
 	while (paths[++i])
 	{
@@ -68,6 +66,21 @@ static int	test_paths(char **cmd)
 		}
 		free(full);
 	}
+	return (-1);
+}
+
+static int	test_paths(char **cmd)
+{
+	char	**paths;
+
+	paths = get_paths();
+	if (!paths)
+	{
+		if (access(cmd[0], F_OK) || access(cmd[0], R_OK | X_OK))
+			return (-1);
+	}
+	if (!loop_paths(cmd, paths))
+		return (0);
 	free_double_pointer(paths);
 	return (-1);
 }
