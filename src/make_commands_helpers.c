@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 16:15:56 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/27 15:21:26 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/27 20:35:48 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,7 @@ static int	count_type(t_token *tokens, int type)
 		{
 			if (type == WORD)
 			{
-				if (tokens[i - 1].type == WORD || tokens[i - 1].type == PIPE)
-					count++;
-			}
-			else
-			{
-				if (tokens[i].type == type || tokens[i - 1].type == type)
+				if (tokens[i - 1].type < 2)
 					count++;
 			}
 		}
@@ -50,13 +45,13 @@ static int	count_redi(t_token *tokens)
 	i = 0;
 	while (tokens[i].type != PIPE && tokens[i].type != -1)
 	{
-		if (!i && (tokens[i].type != WORD && tokens[i].type != PIPE))
+		if (!i && (tokens[i].type > 1))
 			count++;
 		else if (i)
 		{
-			if (tokens[i].type != WORD && tokens[i].type != PIPE)
+			if (tokens[i].type > 1)
 				count++;
-			else if (tokens[i - 1].type != WORD && tokens[i - 1].type != PIPE)
+			else if (tokens[i - 1].type > 1)
 				count++;
 		}
 		i++;

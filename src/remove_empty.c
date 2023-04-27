@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:25:32 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/27 19:49:06 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/27 20:27:53 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	copy_tokens_if_exist(t_token *tokens, t_token *copy)
 	i2 = 0;
 	while (tokens[i].str)
 	{
-		if (tokens[i].type != -2)
+		if ((i && tokens[i].type == -2 && tokens[i - 1].type > 2) || \
+			tokens[i].type != -2)
 		{
 			copy[i2].str = tokens[i].str;
 			copy[i2].type = tokens[i].type;
@@ -42,7 +43,8 @@ t_token	*remove_empty(t_token *tokens)
 	i = -1;
 	count = 0;
 	while (tokens[++i].str)
-		if (tokens[i].type != -2)
+		if ((i && tokens[i].type == -2 && tokens[i - 1].type > 2) || \
+			tokens[i].type != -2)
 			count++;
 	copy = ft_calloc(count + 1, sizeof(t_token));
 	if (!copy)

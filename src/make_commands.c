@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 18:22:21 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/18 11:14:21 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/04/27 20:41:30 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,11 @@ static int	count_commands(t_token *tokens)
 				return (error_print(PIPE));
 			count++;
 		}
-		else if (tokens[i].type != WORD)
-			if (tokens[i + 1].type != WORD)
+		else if (tokens[i].type > 1)
+		{
+			if (tokens[i + 1].type != WORD && tokens[i + 1].type != -2)
 				return (error_print(tokens[i].type));
+		}
 		i++;
 	}
 	return (count);
