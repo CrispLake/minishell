@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:00:45 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/27 19:52:07 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/05/02 18:51:03 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,6 @@
 # include <fcntl.h>
 # include <dirent.h>
 # define METACHARS "|<> \t\n"
-
-//Debug
-void		print_tokens(t_token *tokens);
-void		print_commands(t_command *commands);
-//endofdebug
 
 typedef struct s_env
 {
@@ -74,6 +69,7 @@ t_token		*remove_empty(t_token *tokens);
 int			expand_vector(t_vector *v_str);
 int			expand_dollar(t_vector *v_str);
 int			if_env_expand(t_vector *v_str, char *str, int len, int i);
+int			check_for_env_duplicates(char *str, char *check, int i, int len);
 int			init_vector(t_vector *v_str);
 int			copy_char(t_vector *v_str, char *str, int *i);
 
