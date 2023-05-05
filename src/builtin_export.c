@@ -6,7 +6,7 @@
 /*   By: jole <jole@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 12:02:58 by jole              #+#    #+#             */
-/*   Updated: 2023/04/27 15:23:33 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/05/02 18:51:27 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,35 +38,6 @@ int	expand_env(void)
 		ft_strlcpy(g_vars.env.env[i], tmp[i], ft_strlen(tmp[i]) + 1);
 	}
 	free_double_pointer(tmp);
-	return (0);
-}
-
-int	check_for_env_duplicates(char *str, char *check, int i, int len)
-{
-	char	*new_str;
-
-	if (check != 0)
-	{
-		len = check - str + 1;
-		if (len - 1 < 1)
-			return (-1);
-	}
-	else
-		len = ft_strlen(str);
-	while (g_vars.env.env[++i])
-	{
-		if (ft_strncmp(g_vars.env.env[i], str, len) == 0)
-		{
-			if (str[len - 1] == '=')
-			{
-				new_str = ft_strdup(str);
-				if (!new_str)
-					return (-1);
-				g_vars.env.env[i] = new_str;
-			}
-			return (1);
-		}
-	}
 	return (0);
 }
 
@@ -107,12 +78,10 @@ int	export_string(char *str)
 	if (check_env_name(str) == -1)
 		return (-1);
 	i = check_for_env_duplicates(str, ft_strchr(str, '='), -1, 0);
-	if (i == -1 || i == 1)
-	{
-		if (i == -1)
-			return (-1);
+	if (i == -1)
+		return (-1);
+	if (i == 1)
 		return (0);
-	}
 	i = 0;
 	g_vars.env.env[g_vars.env.items] = ft_calloc((ft_strlen(str) + 1), \
 			sizeof(char));

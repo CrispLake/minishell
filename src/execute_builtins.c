@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 14:58:02 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/27 14:37:34 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/05/02 18:28:16 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,8 @@ int	call_builtin(char **cmd)
 	return (ret);
 }
 
-int	builtin_with_redi(t_command *cmd, t_fd *fds)
+int	builtin_with_redi(t_command *cmd, t_fd *fds, int ret, int save_stdout)
 {
-	int	ret;
-	int	save_stdout;
-
-	ret = 0;
 	if (make_fd(fds, 0, 0, cmd->redi))
 		return (-1);
 	if (fds->fd_out)
@@ -77,11 +73,15 @@ int	builtin_with_redi(t_command *cmd, t_fd *fds)
 	ret = call_builtin(cmd->cmd);
 	if (fds->fd_out)
 	{
+		close(fds->fd_out);
 		if (dup2(save_stdout, STDOUT_FILENO) == -1)
 		{
+			close(save_stdout);
 			perror("minishell");
 			return (-1);
 		}
+		close(save_stdout);
 	}
+	free_commands(cmd);
 	return (ret);
 }

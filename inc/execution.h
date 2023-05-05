@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 17:46:30 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/26 15:00:24 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/05/02 18:28:04 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		make_fd(t_fd *fds, int total, int old, char **redi);
 int		execute_cmds(t_command *cmds);
 int		check_for_builtin(char *cmd);
 int		call_builtin(char **cmd);
-int		builtin_with_redi(t_command *cmd, t_fd *fds);
+int		builtin_with_redi(t_command *cmd, t_fd *fds, int ret, int save_stdout);
 int		add_filepath(char **cmd);
 int		count_cmds(t_command *cmds);
 void	wait_all(int *pids, int total);

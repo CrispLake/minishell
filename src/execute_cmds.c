@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 18:35:02 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/27 17:09:15 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/05/02 18:27:40 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	execute_cmds(t_command *cmds)
 	total = count_cmds(cmds);
 	ft_bzero(&fds, sizeof(t_fd));
 	if (total == 1 && check_for_builtin(cmds->cmd[0]))
-		return (builtin_with_redi(cmds, &fds));
+		return (builtin_with_redi(cmds, &fds, 0, 0));
 	pids = ft_calloc(total, sizeof(int));
 	if (!pids)
 	{

@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 18:22:21 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/27 20:41:30 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/05/02 18:35:43 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ t_command	*make_commands(t_token *tokens)
 	int			count;
 	int			i;
 
+	i = 0;
 	count = count_commands(tokens);
 	if (count < 0)
 		return (NULL);
@@ -67,7 +68,6 @@ t_command	*make_commands(t_token *tokens)
 		return (NULL);
 	if (place_pointers(commands, tokens))
 	{
-		i = 0;
 		while (commands[i].cmd)
 			free(commands[i++].cmd);
 		i = 0;
@@ -76,5 +76,8 @@ t_command	*make_commands(t_token *tokens)
 		free(commands);
 		return (NULL);
 	}
+	while (tokens[i].type != -1)
+		if (tokens[i++].type == PIPE)
+			free(tokens[i - 1].str);
 	return (commands);
 }
