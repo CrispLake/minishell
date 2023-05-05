@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 14:58:02 by emajuri           #+#    #+#             */
-/*   Updated: 2023/05/02 18:28:16 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/05/05 12:52:55 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	call_builtin(char **cmd)
 		ret = builtin_env();
 	else if (builtin == B_EXIT)
 		ret = builtin_exit(&cmd[1]);
+	g_vars.last_exit = ret;
 	return (ret);
 }
 
