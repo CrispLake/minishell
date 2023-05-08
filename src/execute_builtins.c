@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 14:58:02 by emajuri           #+#    #+#             */
-/*   Updated: 2023/05/02 18:28:16 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/05/05 14:14:18 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,32 +54,39 @@ int	call_builtin(char **cmd)
 		ret = builtin_env();
 	else if (builtin == B_EXIT)
 		ret = builtin_exit(&cmd[1]);
+	g_vars.last_exit = ret;
 	return (ret);
+}
+
+static int	dup2_error(int old_fd, int new_fd)
+{
+	if (dup2(old_fd, new_fd) == -1)
+	{
+		perror("minishell");
+		return (-1);
+	}
+	return (0);
 }
 
 int	builtin_with_redi(t_command *cmd, t_fd *fds, int ret, int save_stdout)
 {
 	if (make_fd(fds, 0, 0, cmd->redi))
+	{
+		free_commands(cmd);
 		return (-1);
+	}
 	if (fds->fd_out)
 	{
 		save_stdout = dup(STDOUT_FILENO);
-		if (dup2(fds->fd_out, STDOUT_FILENO) == -1)
-		{
-			perror("minishell");
+		if (dup2_error(fds->fd_out, STDOUT_FILENO) == -1)
 			return (-1);
-		}
 	}
 	ret = call_builtin(cmd->cmd);
 	if (fds->fd_out)
 	{
 		close(fds->fd_out);
-		if (dup2(save_stdout, STDOUT_FILENO) == -1)
-		{
-			close(save_stdout);
-			perror("minishell");
+		if (dup2_error(save_stdout, STDOUT_FILENO) == -1)
 			return (-1);
-		}
 		close(save_stdout);
 	}
 	free_commands(cmd);
