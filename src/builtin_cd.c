@@ -6,11 +6,12 @@
 /*   By: jole <jole@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 18:01:29 by jole              #+#    #+#             */
-/*   Updated: 2023/04/27 15:18:34 by emajuri          ###   ########.fr       */
+/*   Updated: 2023/05/24 13:18:20 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+#include <dirent.h>
 
 int	export_to_env(char *env)
 {
@@ -53,16 +54,20 @@ int	cd_to_home(void)
 int	builtin_cd(char **args)
 {
 	char	*error_message;
+	DIR	*d;
 
 	if (!args[0])
 		return (cd_to_home());
-	else if (!opendir(args[0]))
+	d = opendir(args[0]);
+	if (!d)
 	{
+		
 		error_message = ft_strjoin("minishell: ", args[0]);
 		perror(error_message);
 		free(error_message);
 		return (-1);
 	}
+	closedir(d);
 	if (export_to_env("OLDPWD=") == -1 || chdir(args[0]) || \
 		export_to_env("PWD=") == -1)
 	{
