@@ -48,7 +48,7 @@ typedef struct s_vars
 	int		status;
 }	t_vars;
 
-t_vars		g_vars;
+extern t_vars		g_vars;
 
 int			init_env(void);
 void		rl_replace_line(const char *text, int clear_undo);

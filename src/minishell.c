@@ -12,6 +12,8 @@
 
 #include "../inc/minishell.h"
 
+t_vars g_vars;
+
 t_token	*create_tokens(char *pipeline)
 {
 	t_token	*tokens;

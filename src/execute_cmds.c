@@ -6,7 +6,7 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 18:35:02 by emajuri           #+#    #+#             */
-/*   Updated: 2023/05/02 18:27:40 by emajuri          ###   ########.fr       */
+/*   Updated: 2024/06/04 19:56:50 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,9 @@ int	loop_cmds(t_command *cmds, t_fd *fds, int total, int *pids)
 int	execute_cmds(t_command *cmds)
 {
 	t_fd	fds;
-	int		i;
 	int		total;
 	int		*pids;
 
-	i = 0;
 	total = count_cmds(cmds);
 	ft_bzero(&fds, sizeof(t_fd));
 	if (total == 1 && check_for_builtin(cmds->cmd[0]))

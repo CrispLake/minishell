@@ -6,12 +6,13 @@
 /*   By: emajuri <emajuri@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 16:38:03 by emajuri           #+#    #+#             */
-/*   Updated: 2023/04/26 15:01:46 by emajuri          ###   ########.fr       */
+/*   Updated: 2024/06/04 19:57:23 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 #include <sys/wait.h>
+#include <sys/ioctl.h>
 
 void	wait_all(int *pids, int total)
 {
