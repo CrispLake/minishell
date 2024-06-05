@@ -6,11 +6,12 @@
 /*   By: jole <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 15:21:43 by jole              #+#    #+#             */
-/*   Updated: 2023/04/27 17:38:59 by emajuri          ###   ########.fr       */
+/*   Updated: 2024/06/04 19:56:14 by emajuri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+#include <sys/ioctl.h>
 
 void	sigint_handler(int sig)
 {
